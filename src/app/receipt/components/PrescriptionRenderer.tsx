@@ -213,7 +213,7 @@ function parseHTMLPrescription(text: string): Section[] {
       /<section\s+type="(\w+)">([\s\S]*?)<\/section>/gi
     );
 
-    for (const match of sectionMatches) {
+    for (const match of Array.from(sectionMatches)) {
       const sectionType = match[1].toLowerCase() as SectionType;
       const sectionContent = match[2];
 
@@ -226,7 +226,7 @@ function parseHTMLPrescription(text: string): Section[] {
       if (sectionType === 'medicine') {
         // <item> 안의 <name>, <usage> 파싱
         const itemMatches = sectionContent.matchAll(/<item>([\s\S]*?)<\/item>/gi);
-        for (const itemMatch of itemMatches) {
+        for (const itemMatch of Array.from(itemMatches)) {
           const itemContent = itemMatch[1];
           const nameMatch = itemContent.match(/<name>(.*?)<\/name>/i);
           const usageMatch = itemContent.match(/<usage>(.*?)<\/usage>/i);
@@ -241,7 +241,7 @@ function parseHTMLPrescription(text: string): Section[] {
       } else if (sectionType === 'sideeffect') {
         // <item> 안의 <symptom>, <solution> 파싱
         const itemMatches = sectionContent.matchAll(/<item>([\s\S]*?)<\/item>/gi);
-        for (const itemMatch of itemMatches) {
+        for (const itemMatch of Array.from(itemMatches)) {
           const itemContent = itemMatch[1];
           const symptomMatch = itemContent.match(/<symptom>(.*?)<\/symptom>/i);
           const solutionMatch = itemContent.match(/<solution>(.*?)<\/solution>/i);
@@ -256,7 +256,7 @@ function parseHTMLPrescription(text: string): Section[] {
       } else if (sectionType === 'followup') {
         // <item> 안의 <name>, <schedule> 파싱
         const itemMatches = sectionContent.matchAll(/<item>([\s\S]*?)<\/item>/gi);
-        for (const itemMatch of itemMatches) {
+        for (const itemMatch of Array.from(itemMatches)) {
           const itemContent = itemMatch[1];
           const nameMatch = itemContent.match(/<name>(.*?)<\/name>/i);
           const scheduleMatch = itemContent.match(/<schedule>(.*?)<\/schedule>/i);
@@ -271,7 +271,7 @@ function parseHTMLPrescription(text: string): Section[] {
       } else if (sectionType === 'notes') {
         // <message> 태그들 파싱
         const messageMatches = sectionContent.matchAll(/<message>(.*?)<\/message>/gi);
-        for (const messageMatch of messageMatches) {
+        for (const messageMatch of Array.from(messageMatches)) {
           items.push({
             name: '',
             desc: messageMatch[1].trim(),
