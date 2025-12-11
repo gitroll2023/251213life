@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface Prescription {
   id: number;
@@ -42,13 +42,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
     plan: '',
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      fetchPrescriptions();
-    }
-  }, [isOpen, filter, selectedDate, searchName, searchBirthYear, searchGender]);
-
-  const fetchPrescriptions = async () => {
+  const fetchPrescriptions = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -75,7 +69,13 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter, selectedDate, searchName, searchBirthYear, searchGender]);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchPrescriptions();
+    }
+  }, [isOpen, fetchPrescriptions]);
 
   const handleEdit = (prescription: Prescription) => {
     setSelectedPrescription(prescription);

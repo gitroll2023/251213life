@@ -27,7 +27,7 @@ export async function POST() {
         ALTER TABLE prescriptions
         ADD COLUMN IF NOT EXISTS generation_method VARCHAR(20) DEFAULT 'manual'
       `;
-    } catch (_alterError) {
+    } catch {
       // 컬럼이 이미 존재하면 무시
       console.log('generation_method 컬럼 추가 스킵 (이미 존재)');
     }
