@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: '인생 영수증 프롬프트 메이커',
-  description: '한 해를 정산하고 새해를 준비하는 인생 영수증 프롬프트 생성기',
+  title: '마음 처방전 - AI 처방전',
+  description: '한 해를 돌아보고 마음을 치유하는 특별한 처방전을 만들어보세요',
 };
 
 export default function RootLayout({

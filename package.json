@@ -10,6 +10,8 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
+    "@vercel/postgres": "^0.10.0",
+    "html2canvas": "^1.4.1",
     "next": "14.2.32",
     "react": "^18",
     "react-dom": "^18"
