@@ -287,8 +287,16 @@ export default function PrescriptionPage() {
                           <span className="seal">(인)</span>
                         </div>
                         <div className="signature-row">
-                          <span className="label">의사 면허번호:</span>
+                          <span className="label">AI의사 면허번호:</span>
                           <span className="value">LIFE-2025-****</span>
+                        </div>
+                      </div>
+
+                      <div className="pharmacy-section">
+                        <div className="pharmacy-info">
+                          <span className="pharmacy-label">조제 약국:</span>
+                          <span className="pharmacy-name">마음약국</span>
+                          <span className="pharmacy-contact">TEL: 061-MIND-2025</span>
                         </div>
                       </div>
 
@@ -361,8 +369,16 @@ export default function PrescriptionPage() {
                 <span className="seal-print">(인)</span>
               </div>
               <div className="signature-row-print">
-                <span className="label-print">의사 면허번호:</span>
+                <span className="label-print">AI의사 면허번호:</span>
                 <span className="value-print">LIFE-2025-****</span>
+              </div>
+            </div>
+
+            <div className="pharmacy-section-print">
+              <div className="pharmacy-info-print">
+                <span className="pharmacy-label-print">조제 약국:</span>
+                <span className="pharmacy-name-print">마음약국</span>
+                <span className="pharmacy-contact-print">TEL: 061-MIND-2025</span>
               </div>
             </div>
 
@@ -448,8 +464,16 @@ export default function PrescriptionPage() {
                       <span className="seal">(인)</span>
                     </div>
                     <div className="signature-row">
-                      <span className="label">의사 면허번호:</span>
+                      <span className="label">AI의사 면허번호:</span>
                       <span className="value">LIFE-2025-****</span>
+                    </div>
+                  </div>
+
+                  <div className="pharmacy-section">
+                    <div className="pharmacy-info">
+                      <span className="pharmacy-label">조제 약국:</span>
+                      <span className="pharmacy-name">마음약국</span>
+                      <span className="pharmacy-contact">TEL: 061-MIND-2025</span>
                     </div>
                   </div>
 
@@ -623,6 +647,37 @@ export default function PrescriptionPage() {
           color: #cc0000;
           font-size: 9px;
           margin-left: 6px;
+        }
+
+        /* 약국 섹션 */
+        .pharmacy-section {
+          border: 2px solid #10b981;
+          background: #f0fdf4;
+          padding: 8px 10px;
+          margin-bottom: 8px;
+        }
+
+        .pharmacy-info {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 9px;
+        }
+
+        .pharmacy-label {
+          font-weight: 600;
+          color: #10b981;
+        }
+
+        .pharmacy-name {
+          font-weight: 700;
+          color: #059669;
+          font-size: 10px;
+        }
+
+        .pharmacy-contact {
+          color: #666;
+          margin-left: auto;
         }
 
         .prescription-notice {
@@ -857,6 +912,38 @@ export default function PrescriptionPage() {
             font-size: 7pt;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+          }
+
+          .pharmacy-section-print {
+            border: 1px solid #10b981;
+            background: #f0fdf4;
+            padding: 4pt 6pt;
+            margin-bottom: 3pt;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+
+          .pharmacy-info-print {
+            display: flex;
+            align-items: center;
+            gap: 4pt;
+            font-size: 7.5pt;
+          }
+
+          .pharmacy-label-print {
+            font-weight: 600;
+            color: #10b981;
+          }
+
+          .pharmacy-name-print {
+            font-weight: 700;
+            color: #059669;
+            font-size: 8pt;
+          }
+
+          .pharmacy-contact-print {
+            color: #666;
+            margin-left: auto;
           }
 
           .prescription-notice-print {
