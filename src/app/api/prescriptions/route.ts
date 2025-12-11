@@ -5,18 +5,34 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, birthYear, gender, memory, regret, plan, prescriptionHtml, prescriptionNumber, generationMethod } = body;
+    const {
+      name,
+      birthYear,
+      gender,
+      memory,
+      regret,
+      plan,
+      prescriptionHtml,
+      prescriptionNumber,
+      generationMethod,
+    } = body;
 
     // 필수 필드 검증
-    if (!name || !birthYear || !gender || !memory || !regret || !plan || !prescriptionHtml || !prescriptionNumber) {
-      return NextResponse.json(
-        { error: '모든 필드를 입력해주세요.' },
-        { status: 400 }
-      );
+    if (
+      !name ||
+      !birthYear ||
+      !gender ||
+      !memory ||
+      !regret ||
+      !plan ||
+      !prescriptionHtml ||
+      !prescriptionNumber
+    ) {
+      return NextResponse.json({ error: '모든 필드를 입력해주세요.' }, { status: 400 });
     }
 
     // 한국 시간 (UTC+9) 생성
-    const koreaTime = new Date(new Date().getTime() + (9 * 60 * 60 * 1000));
+    const koreaTime = new Date(new Date().getTime() + 9 * 60 * 60 * 1000);
 
     const result = await sql`
       INSERT INTO prescriptions (
@@ -34,12 +50,15 @@ export async function POST(request: NextRequest) {
       success: true,
       id: result.rows[0].id,
       createdAt: result.rows[0].created_at,
-      message: '처방전이 성공적으로 저장되었습니다.'
+      message: '처방전이 성공적으로 저장되었습니다.',
     });
   } catch (error) {
     console.error('처방전 저장 에러:', error);
     return NextResponse.json(
-      { error: '처방전 저장 실패', details: error instanceof Error ? error.message : 'Unknown error' },
+      {
+        error: '처방전 저장 실패',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
       { status: 500 }
     );
   }
@@ -56,7 +75,7 @@ export async function GET(request: NextRequest) {
     const gender = searchParams.get('gender');
 
     let query = 'SELECT * FROM prescriptions WHERE 1=1';
-    const params: any[] = [];
+    const params: (string | undefined)[] = [];
     let paramIndex = 1;
 
     // 날짜 필터
@@ -66,7 +85,7 @@ export async function GET(request: NextRequest) {
       paramIndex++;
     } else if (filter !== 'all') {
       const now = new Date();
-      let dateFilter = new Date();
+      const dateFilter = new Date();
 
       switch (filter) {
         case 'today':
@@ -121,12 +140,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       prescriptions: result.rows,
-      count: result.rows.length
+      count: result.rows.length,
     });
   } catch (error) {
     console.error('처방전 조회 에러:', error);
     return NextResponse.json(
-      { error: '처방전 조회 실패', details: error instanceof Error ? error.message : 'Unknown error' },
+      {
+        error: '처방전 조회 실패',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
       { status: 500 }
     );
   }

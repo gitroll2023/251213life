@@ -27,7 +27,7 @@ export async function POST() {
         ALTER TABLE prescriptions
         ADD COLUMN IF NOT EXISTS generation_method VARCHAR(20) DEFAULT 'manual'
       `;
-    } catch (alterError) {
+    } catch (_alterError) {
       // 컬럼이 이미 존재하면 무시
       console.log('generation_method 컬럼 추가 스킵 (이미 존재)');
     }
@@ -45,12 +45,15 @@ export async function POST() {
 
     return NextResponse.json({
       success: true,
-      message: '데이터베이스 테이블이 성공적으로 생성되었습니다.'
+      message: '데이터베이스 테이블이 성공적으로 생성되었습니다.',
     });
   } catch (error) {
     console.error('DB 초기화 에러:', error);
     return NextResponse.json(
-      { error: '데이터베이스 초기화 실패', details: error instanceof Error ? error.message : 'Unknown error' },
+      {
+        error: '데이터베이스 초기화 실패',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
       { status: 500 }
     );
   }

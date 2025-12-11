@@ -39,7 +39,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
     gender: '',
     memory: '',
     regret: '',
-    plan: ''
+    plan: '',
   });
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
       gender: prescription.gender,
       memory: prescription.memory,
       regret: prescription.regret,
-      plan: prescription.plan
+      plan: prescription.plan,
     });
     setShowEditModal(true);
   };
@@ -103,8 +103,8 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
           gender: editForm.gender,
           memory: editForm.memory,
           regret: editForm.regret,
-          plan: editForm.plan
-        })
+          plan: editForm.plan,
+        }),
       });
 
       const data = await response.json();
@@ -127,7 +127,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
 
     try {
       const response = await fetch(`/api/prescriptions/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
 
       const data = await response.json();
@@ -149,10 +149,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
   return (
     <>
       {/* 백드롭 */}
-      <div
-        className="fixed inset-0 bg-black/50 z-50 fade-in"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-black/50 z-50 fade-in" onClick={onClose} />
 
       {/* 사이드바 */}
       <div className="fixed inset-y-0 right-0 z-50 w-full md:w-[450px] lg:w-[500px] bg-white shadow-2xl flex flex-col slide-in-right">
@@ -175,8 +172,8 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
               <label className="block text-xs font-semibold text-gray-700 mb-1">기간 필터</label>
               <select
                 value={filter}
-                onChange={(e) => {
-                  setFilter(e.target.value as any);
+                onChange={e => {
+                  setFilter(e.target.value as 'today' | '3days' | '7days' | '30days' | 'all');
                   setSelectedDate('');
                 }}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -195,7 +192,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
               <input
                 type="date"
                 value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                onChange={e => setSelectedDate(e.target.value)}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
@@ -208,7 +205,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
               <input
                 type="text"
                 value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
+                onChange={e => setSearchName(e.target.value)}
                 placeholder="이름 검색..."
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
               />
@@ -220,7 +217,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
               <input
                 type="text"
                 value={searchBirthYear}
-                onChange={(e) => setSearchBirthYear(e.target.value)}
+                onChange={e => setSearchBirthYear(e.target.value)}
                 placeholder="YYYY"
                 maxLength={4}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -233,7 +230,9 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
             <button
               onClick={() => setSearchGender('')}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                searchGender === '' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                searchGender === ''
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
               전체
@@ -241,7 +240,9 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
             <button
               onClick={() => setSearchGender('남성')}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                searchGender === '남성' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                searchGender === '남성'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
               남성
@@ -249,7 +250,9 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
             <button
               onClick={() => setSearchGender('여성')}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                searchGender === '여성' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                searchGender === '여성'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
               여성
@@ -270,7 +273,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
             </div>
           ) : (
             <div className="space-y-3">
-              {prescriptions.map((prescription) => (
+              {prescriptions.map(prescription => (
                 <div
                   key={prescription.id}
                   className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
@@ -287,7 +290,8 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                       <strong>처방전 번호:</strong> {prescription.prescription_number}
                     </p>
                     <p className="text-xs text-gray-600 mb-1">
-                      <strong>생성일:</strong> {new Date(prescription.created_at).toLocaleString('ko-KR')}
+                      <strong>생성일:</strong>{' '}
+                      {new Date(prescription.created_at).toLocaleString('ko-KR')}
                     </p>
                     <p className="text-xs text-gray-600">
                       <strong>생성 방법:</strong>{' '}
@@ -302,11 +306,14 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                     <button
                       onClick={() => {
                         localStorage.setItem('prescription', prescription.prescription_html);
-                        localStorage.setItem('patientInfo', JSON.stringify({
-                          name: prescription.name,
-                          birthYear: prescription.birth_year,
-                          gender: prescription.gender
-                        }));
+                        localStorage.setItem(
+                          'patientInfo',
+                          JSON.stringify({
+                            name: prescription.name,
+                            birthYear: prescription.birth_year,
+                            gender: prescription.gender,
+                          })
+                        );
                         window.location.href = '/receipt';
                       }}
                       className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition-colors"
@@ -341,7 +348,8 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
         {/* 결과 카운트 */}
         <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
           <p className="text-sm text-gray-600">
-            총 <strong className="text-blue-600">{prescriptions.length}개</strong>의 처방전이 조회되었습니다.
+            총 <strong className="text-blue-600">{prescriptions.length}개</strong>의 처방전이
+            조회되었습니다.
           </p>
         </div>
       </div>
@@ -367,7 +375,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                   <input
                     type="text"
                     value={editForm.name}
-                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    onChange={e => setEditForm({ ...editForm, name: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
@@ -376,7 +384,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                   <input
                     type="text"
                     value={editForm.birthYear}
-                    onChange={(e) => setEditForm({ ...editForm, birthYear: e.target.value })}
+                    onChange={e => setEditForm({ ...editForm, birthYear: e.target.value })}
                     maxLength={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                   />
@@ -385,7 +393,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                   <label className="block text-sm font-semibold text-gray-700 mb-2">성별</label>
                   <select
                     value={editForm.gender}
-                    onChange={(e) => setEditForm({ ...editForm, gender: e.target.value })}
+                    onChange={e => setEditForm({ ...editForm, gender: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                   >
                     <option value="남성">남성</option>
@@ -400,7 +408,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                 </label>
                 <textarea
                   value={editForm.memory}
-                  onChange={(e) => setEditForm({ ...editForm, memory: e.target.value })}
+                  onChange={e => setEditForm({ ...editForm, memory: e.target.value })}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 outline-none"
                 />
@@ -412,7 +420,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                 </label>
                 <textarea
                   value={editForm.regret}
-                  onChange={(e) => setEditForm({ ...editForm, regret: e.target.value })}
+                  onChange={e => setEditForm({ ...editForm, regret: e.target.value })}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 outline-none"
                 />
@@ -424,7 +432,7 @@ export default function HistoryModal({ isOpen, onClose, onSelect }: HistoryModal
                 </label>
                 <textarea
                   value={editForm.plan}
-                  onChange={(e) => setEditForm({ ...editForm, plan: e.target.value })}
+                  onChange={e => setEditForm({ ...editForm, plan: e.target.value })}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 outline-none"
                 />

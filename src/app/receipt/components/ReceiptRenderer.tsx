@@ -17,7 +17,10 @@ export default function ReceiptRenderer({ text }: ReceiptRendererProps) {
   let preprocessedText = text;
 
   // 섹션 키워드 전에 줄바꿈 추가 (이미 줄바꿈이 없는 경우)
-  preprocessedText = preprocessedText.replace(/([^\n])(구매 내역|반품.*내역|미수령.*내역|예약 주문|올해의 결산|특별 메시지)/g, '$1\n$2');
+  preprocessedText = preprocessedText.replace(
+    /([^\n])(구매 내역|반품.*내역|미수령.*내역|예약 주문|올해의 결산|특별 메시지)/g,
+    '$1\n$2'
+  );
 
   // [메시지] 태그 전에도 줄바꿈
   preprocessedText = preprocessedText.replace(/([^\n])(\[메시지\])/g, '$1\n$2');
@@ -57,7 +60,8 @@ export default function ReceiptRenderer({ text }: ReceiptRendererProps) {
     // [섹션] 태그로 시작하는 경우
     if (trimmedLine.startsWith('[섹션]')) {
       const title = trimmedLine.replace('[섹션]', '').trim();
-      inSpecialSection = title.includes('결산') || (title.includes('특별') && title.includes('메시지'));
+      inSpecialSection =
+        title.includes('결산') || (title.includes('특별') && title.includes('메시지'));
 
       elements.push(
         <div key={i} className="font-bold text-base mt-8 mb-3 text-gray-900 first:mt-0">
@@ -71,7 +75,9 @@ export default function ReceiptRenderer({ text }: ReceiptRendererProps) {
     }
 
     // 섹션 키워드 감지 (태그 없이 온 경우)
-    const sectionMatch = trimmedLine.match(/^(구매 내역.*|반품.*내역.*|미수령.*내역.*|예약 주문.*|올해의 결산.*|특별 메시지)/);
+    const sectionMatch = trimmedLine.match(
+      /^(구매 내역.*|반품.*내역.*|미수령.*내역.*|예약 주문.*|올해의 결산.*|특별 메시지)/
+    );
     if (sectionMatch) {
       let title = sectionMatch[1];
       let remainingContent = trimmedLine.substring(title.length).trim();
@@ -83,7 +89,8 @@ export default function ReceiptRenderer({ text }: ReceiptRendererProps) {
         remainingContent = titleParts.slice(1).join('>>').trim() + ' ' + remainingContent;
       }
 
-      inSpecialSection = title.includes('결산') || (title.includes('특별') && title.includes('메시지'));
+      inSpecialSection =
+        title.includes('결산') || (title.includes('특별') && title.includes('메시지'));
 
       elements.push(
         <div key={i} className="font-bold text-base mt-8 mb-3 text-gray-900 first:mt-0">
@@ -97,7 +104,10 @@ export default function ReceiptRenderer({ text }: ReceiptRendererProps) {
       // 남은 내용에 >> 항목들이 있으면 파싱
       if (remainingContent && remainingContent.includes('>>')) {
         // >> 로 분리
-        const segments = remainingContent.split('>>').map(s => s.trim()).filter(s => s);
+        const segments = remainingContent
+          .split('>>')
+          .map(s => s.trim())
+          .filter(s => s);
         const parsedItems: Array<{ name: string; desc: string }> = [];
 
         for (let j = 0; j < segments.length; j++) {

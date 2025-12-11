@@ -162,20 +162,23 @@ export default function PrescriptionPage() {
             {/* 왼쪽: 입력 영역 - Gemini로 생성된 경우 숨김 */}
             {!fromGemini && (
               <div className="space-y-6">
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">마음 처방전 뷰어</h1>
-                <p className="text-gray-600 mb-6">
-                  AI가 생성한 처방전을 붙여넣으면 실제 처방전처럼 확인할 수 있습니다
-                </p>
+                <div className="bg-white rounded-xl shadow-lg p-6">
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">마음 처방전 뷰어</h1>
+                  <p className="text-gray-600 mb-6">
+                    AI가 생성한 처방전을 붙여넣으면 실제 처방전처럼 확인할 수 있습니다
+                  </p>
 
-                <label htmlFor="prescription" className="block text-sm font-semibold text-gray-700 mb-2">
-                  AI 생성 처방전 텍스트 (약품 + 조언)
-                </label>
-                <textarea
-                  id="prescription"
-                  value={prescriptionText}
-                  onChange={e => setPrescriptionText(e.target.value)}
-                  placeholder='<prescription>
+                  <label
+                    htmlFor="prescription"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    AI 생성 처방전 텍스트 (약품 + 조언)
+                  </label>
+                  <textarea
+                    id="prescription"
+                    value={prescriptionText}
+                    onChange={e => setPrescriptionText(e.target.value)}
+                    placeholder='<prescription>
   <section type="medicine">
     <title>처방 약품</title>
     <item>
@@ -196,17 +199,18 @@ export default function PrescriptionPage() {
 </prescription>
 
 (AI가 생성한 HTML 형식을 붙여넣으세요)'
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none font-mono text-sm h-96"
-                />
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none font-mono text-sm h-96"
+                  />
 
-                <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="text-sm text-blue-800">
-                    💡 <strong>팁:</strong> AI가 생성한 &lt;prescription&gt; ~ &lt;/prescription&gt; 전체를 복사하여
-                    붙여넣으세요. HTML 형식으로 정확하게 파싱됩니다.
-                  </p>
+                  <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p className="text-sm text-blue-800">
+                      💡 <strong>팁:</strong> AI가 생성한 &lt;prescription&gt; ~
+                      &lt;/prescription&gt; 전체를 복사하여 붙여넣으세요. HTML 형식으로 정확하게
+                      파싱됩니다.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
             )}
 
             {/* 오른쪽: A4 미리보기 영역 */}
@@ -240,7 +244,9 @@ export default function PrescriptionPage() {
 
                       <div className="prescription-title-box">
                         <h1 className="prescription-title">처 방 전</h1>
-                        <span className="prescription-number">처방전번호: {prescriptionNumber}</span>
+                        <span className="prescription-number">
+                          처방전번호: {prescriptionNumber}
+                        </span>
                       </div>
 
                       <div className="patient-info-box">
@@ -250,7 +256,9 @@ export default function PrescriptionPage() {
                               <td className="label">신청자 성명:</td>
                               <td className="value">{patientName || '_______________'}</td>
                               <td className="label">생년월일:</td>
-                              <td className="value">{patientBirthYear ? `${patientBirthYear}년` : '______년'}</td>
+                              <td className="value">
+                                {patientBirthYear ? `${patientBirthYear}년` : '______년'}
+                              </td>
                             </tr>
                             <tr>
                               <td className="label">발급일:</td>
@@ -285,7 +293,8 @@ export default function PrescriptionPage() {
                       </div>
 
                       <div className="prescription-notice">
-                        본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유 계획을 꾸준히 실천해주세요.
+                        본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유
+                        계획을 꾸준히 실천해주세요.
                       </div>
                     </div>
                   </div>
@@ -321,7 +330,9 @@ export default function PrescriptionPage() {
                     <td className="label-print">신청자 성명:</td>
                     <td className="value-print">{patientName || '_______________'}</td>
                     <td className="label-print">생년월일:</td>
-                    <td className="value-print">{patientBirthYear ? `${patientBirthYear}년` : '______년'}</td>
+                    <td className="value-print">
+                      {patientBirthYear ? `${patientBirthYear}년` : '______년'}
+                    </td>
                   </tr>
                   <tr>
                     <td className="label-print">발급일:</td>
@@ -356,7 +367,8 @@ export default function PrescriptionPage() {
             </div>
 
             <div className="prescription-notice-print">
-              본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유 계획을 꾸준히 실천해주세요.
+              본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유 계획을
+              꾸준히 실천해주세요.
             </div>
           </div>
         </div>
@@ -405,7 +417,9 @@ export default function PrescriptionPage() {
                           <td className="label">신청자 성명:</td>
                           <td className="value">{patientName || '_______________'}</td>
                           <td className="label">생년월일:</td>
-                          <td className="value">{patientBirthYear ? `${patientBirthYear}년` : '______년'}</td>
+                          <td className="value">
+                            {patientBirthYear ? `${patientBirthYear}년` : '______년'}
+                          </td>
                         </tr>
                         <tr>
                           <td className="label">발급일:</td>
@@ -440,7 +454,8 @@ export default function PrescriptionPage() {
                   </div>
 
                   <div className="prescription-notice">
-                    본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유 계획을 꾸준히 실천해주세요.
+                    본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유
+                    계획을 꾸준히 실천해주세요.
                   </div>
                 </div>
               </div>
@@ -468,7 +483,7 @@ export default function PrescriptionPage() {
           min-height: 100%;
           background: white;
           padding: 20px 30px;
-          border: 3px solid #0066CC;
+          border: 3px solid #0066cc;
           font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
         }
 
@@ -479,7 +494,7 @@ export default function PrescriptionPage() {
 
         .clinic-info {
           text-align: center;
-          border-bottom: 2px solid #0066CC;
+          border-bottom: 2px solid #0066cc;
           padding-bottom: 10px;
           margin-bottom: 12px;
         }
@@ -493,7 +508,7 @@ export default function PrescriptionPage() {
           font-family: 'Noto Serif KR', serif;
           font-size: 18px;
           font-weight: 700;
-          color: #0066CC;
+          color: #0066cc;
           margin-bottom: 2px;
         }
 
@@ -521,8 +536,8 @@ export default function PrescriptionPage() {
           align-items: center;
           margin-bottom: 10px;
           padding: 6px 10px;
-          background: #F0F8FF;
-          border: 1px solid #0066CC;
+          background: #f0f8ff;
+          border: 1px solid #0066cc;
         }
 
         .prescription-title {
@@ -539,7 +554,7 @@ export default function PrescriptionPage() {
 
         .patient-info-box {
           border: 1.5px solid #333;
-          background: #FAFAFA;
+          background: #fafafa;
           padding: 10px;
           margin-bottom: 14px;
         }
@@ -576,7 +591,7 @@ export default function PrescriptionPage() {
 
         .signature-section {
           border: 2px solid #000;
-          background: #FFF9E6;
+          background: #fff9e6;
           padding: 10px;
           margin-bottom: 8px;
         }
@@ -600,12 +615,12 @@ export default function PrescriptionPage() {
         .signature-row .seal {
           width: 26px;
           height: 26px;
-          border: 1px solid #CC0000;
+          border: 1px solid #cc0000;
           border-radius: 50%;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          color: #CC0000;
+          color: #cc0000;
           font-size: 9px;
           margin-left: 6px;
         }
@@ -615,8 +630,8 @@ export default function PrescriptionPage() {
           font-size: 7px;
           color: #666;
           padding: 6px;
-          background: #F0F0F0;
-          border-top: 1px solid #CCC;
+          background: #f0f0f0;
+          border-top: 1px solid #ccc;
         }
 
         /* 인쇄 스타일 */
@@ -646,7 +661,7 @@ export default function PrescriptionPage() {
           }
 
           .prescription-header-print {
-            border: 2.5px solid #0066CC;
+            border: 2.5px solid #0066cc;
             padding: 6pt 10pt;
             margin-bottom: 4pt;
             page-break-inside: avoid;
@@ -654,7 +669,7 @@ export default function PrescriptionPage() {
 
           .clinic-info-print {
             text-align: center;
-            border-bottom: 1.5px solid #0066CC;
+            border-bottom: 1.5px solid #0066cc;
             padding-bottom: 4pt;
             margin-bottom: 4pt;
           }
@@ -668,7 +683,7 @@ export default function PrescriptionPage() {
             font-family: 'Noto Serif KR', serif;
             font-size: 11pt;
             font-weight: 700;
-            color: #0066CC;
+            color: #0066cc;
           }
 
           .clinic-name-en-print {
@@ -686,8 +701,8 @@ export default function PrescriptionPage() {
             display: flex;
             justify-content: space-between;
             padding: 4pt 8pt;
-            background: #F0F8FF;
-            border: 1px solid #0066CC;
+            background: #f0f8ff;
+            border: 1px solid #0066cc;
             margin-bottom: 6pt;
           }
 
@@ -704,7 +719,7 @@ export default function PrescriptionPage() {
 
           .patient-info-box-print {
             border: 1px solid #333;
-            background: #FAFAFA;
+            background: #fafafa;
             padding: 8pt;
             margin-bottom: 4pt;
           }
@@ -816,7 +831,7 @@ export default function PrescriptionPage() {
 
           .signature-section-print {
             border: 1px solid #000;
-            background: #FFF9E6;
+            background: #fff9e6;
             padding: 4pt 6pt;
             margin-bottom: 3pt;
             -webkit-print-color-adjust: exact;
@@ -833,12 +848,12 @@ export default function PrescriptionPage() {
           .seal-print {
             width: 14pt;
             height: 14pt;
-            border: 1px solid #CC0000;
+            border: 1px solid #cc0000;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #CC0000;
+            color: #cc0000;
             font-size: 7pt;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
@@ -849,7 +864,7 @@ export default function PrescriptionPage() {
             font-size: 6pt;
             color: #666;
             padding: 2.5pt;
-            background: #F0F0F0;
+            background: #f0f0f0;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
           }
@@ -868,7 +883,7 @@ export default function PrescriptionPage() {
           min-height: 297mm;
           background: white;
           padding: 20px 30px;
-          border: 3px solid #0066CC;
+          border: 3px solid #0066cc;
           font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
         }
       `}</style>

@@ -6,10 +6,7 @@ export async function POST(request: NextRequest) {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'Gemini API 키가 설정되지 않았습니다.' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Gemini API 키가 설정되지 않았습니다.' }, { status: 500 });
     }
 
     // Gemini 3.0 API 호출
@@ -55,9 +52,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ prescription: generatedText });
   } catch (error) {
     console.error('처방전 생성 에러:', error);
-    return NextResponse.json(
-      { error: '처방전 생성 중 오류가 발생했습니다.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: '처방전 생성 중 오류가 발생했습니다.' }, { status: 500 });
   }
 }

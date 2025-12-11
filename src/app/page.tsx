@@ -129,23 +129,48 @@ export default function Home() {
     const icons = [
       // 주사위 아이콘
       <svg key="dice" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+        />
       </svg>,
       // 반짝이 아이콘
       <svg key="sparkles" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+        />
       </svg>,
       // 마법봉 아이콘
       <svg key="wand" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
       </svg>,
       // 셔플 아이콘
       <svg key="shuffle" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+        />
       </svg>,
       // 리프레시 아이콘
       <svg key="refresh" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+        />
       </svg>,
     ];
     return icons[dummyIconIndex];
@@ -159,7 +184,7 @@ export default function Home() {
         gender: '남성',
         memory: '회사에서 큰 프로젝트를 성공적으로 완수하고 팀원들과 함께 성장한 경험',
         regret: '건강 관리에 소홀해서 체력이 많이 떨어진 것',
-        plan: '매일 30분씩 운동하고, 명상으로 마음의 평온 찾기'
+        plan: '매일 30분씩 운동하고, 명상으로 마음의 평온 찾기',
       },
       {
         name: '김영희',
@@ -167,7 +192,7 @@ export default function Home() {
         gender: '여성',
         memory: '새로운 취미로 시작한 요가를 통해 내면의 평화를 찾은 경험',
         regret: '가족과 함께하는 시간을 충분히 만들지 못한 것',
-        plan: '주말마다 가족과 함께 여행하고, 일주일에 3번 요가 수련하기'
+        plan: '주말마다 가족과 함께 여행하고, 일주일에 3번 요가 수련하기',
       },
       {
         name: '박민수',
@@ -175,7 +200,7 @@ export default function Home() {
         gender: '남성',
         memory: '첫 마라톤 완주에 성공하며 끈기와 인내를 배운 경험',
         regret: '독서 목표를 달성하지 못하고 스마트폰에 너무 많은 시간을 쏟은 것',
-        plan: '매달 2권 이상 책 읽기, 하루 스마트폰 사용 시간 2시간 이내로 제한하기'
+        plan: '매달 2권 이상 책 읽기, 하루 스마트폰 사용 시간 2시간 이내로 제한하기',
       },
       {
         name: '이수진',
@@ -183,7 +208,7 @@ export default function Home() {
         gender: '여성',
         memory: '오랜만에 친구들과 재회하며 소중한 인연의 가치를 깨달은 경험',
         regret: '자기계발에 투자하지 못하고 현상 유지에만 머물렀던 것',
-        plan: '온라인 강의로 새로운 기술 배우기, 월 1회 독서 모임 참여하기'
+        plan: '온라인 강의로 새로운 기술 배우기, 월 1회 독서 모임 참여하기',
       },
       {
         name: '최민상',
@@ -191,8 +216,8 @@ export default function Home() {
         gender: '남성',
         memory: '처음으로 봉사활동을 시작하며 나눔의 기쁨을 느낀 경험',
         regret: '재정 관리를 제대로 하지 못해 저축 목표를 달성하지 못한 것',
-        plan: '매달 수입의 20% 저축하기, 분기마다 1회 봉사활동 참여하기'
-      }
+        plan: '매달 수입의 20% 저축하기, 분기마다 1회 봉사활동 참여하기',
+      },
     ];
 
     const randomData = dummyDataSets[Math.floor(Math.random() * dummyDataSets.length)];
@@ -205,7 +230,7 @@ export default function Home() {
     setPlan(randomData.plan);
 
     // 아이콘도 랜덤하게 변경 (5개 아이콘 순환)
-    setDummyIconIndex((prev) => (prev + 1) % 5);
+    setDummyIconIndex(prev => (prev + 1) % 5);
   };
 
   const handleGenerateClick = () => {
@@ -349,8 +374,8 @@ export default function Home() {
             plan,
             prescriptionHtml: data.prescription,
             prescriptionNumber,
-            generationMethod: 'gemini_ai'
-          })
+            generationMethod: 'gemini_ai',
+          }),
         });
       } catch (dbError) {
         console.error('DB 저장 에러 (계속 진행):', dbError);
@@ -359,11 +384,14 @@ export default function Home() {
       // 처방전이 생성되면 자동으로 로컬 스토리지에 저장
       localStorage.setItem('prescription', data.prescription);
       // 신청자 정보도 함께 저장
-      localStorage.setItem('patientInfo', JSON.stringify({
-        name,
-        birthYear,
-        gender
-      }));
+      localStorage.setItem(
+        'patientInfo',
+        JSON.stringify({
+          name,
+          birthYear,
+          gender,
+        })
+      );
 
       // 바로 처방전 뷰어 페이지로 이동
       router.push('/receipt');
@@ -398,7 +426,12 @@ export default function Home() {
             >
               💊 처방전 뷰어 & 인쇄하기
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </Link>
           </div>
@@ -414,7 +447,12 @@ export default function Home() {
               title="히스토리 보기"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
               </svg>
               <span className="text-xs font-semibold">히스토리</span>
             </button>
@@ -455,7 +493,10 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label htmlFor="birthYear" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  htmlFor="birthYear"
+                  className="block text-sm font-semibold text-gray-700 mb-2"
+                >
                   출생연도
                 </label>
                 <input
@@ -538,7 +579,9 @@ export default function Home() {
               </button>
               <button
                 onClick={handleGenerateClick}
-                disabled={!name || !birthYear || !gender || !memory || !regret || !plan || isGenerating}
+                disabled={
+                  !name || !birthYear || !gender || !memory || !regret || !plan || isGenerating
+                }
                 className="bg-teal-600 hover:bg-teal-700 text-white py-3.5 px-6 rounded-lg font-semibold transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm"
               >
                 🤖 Gemini AI로 바로 생성
@@ -572,7 +615,10 @@ export default function Home() {
                 <li>위의 프롬프트를 복사하여 ChatGPT, Claude, Gemini 등의 AI에게 입력</li>
                 <li>AI가 생성한 HTML 형식 처방전을 복사 (전체 &lt;prescription&gt; 태그 포함)</li>
                 <li>
-                  <Link href="/receipt" className="font-semibold text-blue-600 underline hover:text-blue-800">
+                  <Link
+                    href="/receipt"
+                    className="font-semibold text-blue-600 underline hover:text-blue-800"
+                  >
                     처방전 뷰어 페이지
                   </Link>
                   로 이동하여 붙여넣기
@@ -592,10 +638,10 @@ export default function Home() {
                   <span className="text-4xl">🤖</span>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">AI 처방전 생성</h2>
-                <p className="text-gray-600">
-                  Gemini AI로 맞춤형 처방전을 생성하시겠습니까?
+                <p className="text-gray-600">Gemini AI로 맞춤형 처방전을 생성하시겠습니까?</p>
+                <p className="text-sm text-gray-500 mt-2">
+                  생성 후 바로 미리보기 화면으로 이동합니다.
                 </p>
-                <p className="text-sm text-gray-500 mt-2">생성 후 바로 미리보기 화면으로 이동합니다.</p>
               </div>
               <div className="flex gap-3">
                 <button
@@ -622,11 +668,10 @@ export default function Home() {
               <div className="mb-6">
                 <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-blue-600"></div>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                🤖 AI 처방전 생성 중
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">🤖 AI 처방전 생성 중</h2>
               <p className="text-gray-600">
-                <span className="font-semibold text-blue-600">{name}</span>님을 위한 맞춤형 처방전을 작성하고 있습니다.
+                <span className="font-semibold text-blue-600">{name}</span>님을 위한 맞춤형 처방전을
+                작성하고 있습니다.
               </p>
               <p className="text-sm text-gray-500 mt-2">잠시만 기다려주세요...</p>
             </div>
@@ -637,7 +682,7 @@ export default function Home() {
         <HistoryModal
           isOpen={showHistoryModal}
           onClose={() => setShowHistoryModal(false)}
-          onSelect={(prescription) => {
+          onSelect={prescription => {
             setName(prescription.name);
             setBirthYear(prescription.birth_year);
             setGender(prescription.gender);
