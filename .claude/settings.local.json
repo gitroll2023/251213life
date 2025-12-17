@@ -21,7 +21,12 @@
       "Bash(npx prettier --write \"src/**/*.{ts,tsx}\")",
       "Bash(npm run build:*)",
       "Bash(timeout /t 30 /nobreak)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nfix: TypeScript 오류 수정 및 코드 포맷팅 개선\n\n- TypeScript any 타입 오류 수정\n- 미사용 변수 제거\n- Prettier 포맷팅 적용\n- API 라우트 타입 안정성 개선\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: TypeScript 오류 수정 및 코드 포맷팅 개선\n\n- TypeScript any 타입 오류 수정\n- 미사용 변수 제거\n- Prettier 포맷팅 적용\n- API 라우트 타입 안정성 개선\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: TypeScript 오류 수정 및 코드 포맷팅 개선\n\n- TypeScript any 타입 오류 수정\n- 미사용 변수 제거  \n- Prettier 포맷팅 적용\n- API 라우트 타입 안정성 개선\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(npx prettier --write \"src/app/receipt/components/PrescriptionRenderer.tsx\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: RegExp iterator 오류 수정\n\n- matchAll() 반복자를 Array.from()으로 변환\n- TypeScript downlevelIteration 오류 해결\n- 5개 위치 모두 수정 완료\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(npx prettier:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

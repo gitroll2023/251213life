@@ -5,13 +5,10 @@ import Link from 'next/link';
 import html2canvas from 'html2canvas';
 import PrescriptionRenderer from './components/PrescriptionRenderer';
 
-export default function PrescriptionPage() {
+export default function ReceiptPage() {
   const [prescriptionText, setPrescriptionText] = useState('');
-  const [prescriptionNumber, setPrescriptionNumber] = useState('');
   const [issueDate, setIssueDate] = useState('');
-  const [validUntil, setValidUntil] = useState('');
   const [patientName, setPatientName] = useState('');
-  const [patientBirthYear, setPatientBirthYear] = useState('');
   const [fromGemini, setFromGemini] = useState(false);
   const [showA4Modal, setShowA4Modal] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
@@ -21,32 +18,14 @@ export default function PrescriptionPage() {
     // 인쇄 시 타이틀 제거
     document.title = ' ';
 
-    // 처방전 번호 생성 (RX-YYYY-MM-#### 형식)
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const random = Math.floor(Math.random() * 10000)
-      .toString()
-      .padStart(4, '0');
-    setPrescriptionNumber(`RX-${year}-${month}-${random}`);
-
     // 발급일 설정
+    const now = new Date();
     const issueDateStr = now.toLocaleDateString('ko-KR', {
       year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
+      month: 'long',
+      day: 'numeric',
     });
     setIssueDate(issueDateStr);
-
-    // 사용기간 설정 (발급일로부터 7일)
-    const validDate = new Date(now);
-    validDate.setDate(validDate.getDate() + 7);
-    const validDateStr = validDate.toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    setValidUntil(validDateStr);
 
     // 로컬 스토리지에서 처방전 불러오기
     const savedPrescription = localStorage.getItem('prescription');
@@ -63,7 +42,6 @@ export default function PrescriptionPage() {
       try {
         const patientInfo = JSON.parse(savedPatientInfo);
         setPatientName(patientInfo.name || '');
-        setPatientBirthYear(patientInfo.birthYear || '');
         // 불러온 후 삭제 (일회성)
         localStorage.removeItem('patientInfo');
       } catch (error) {
@@ -89,20 +67,17 @@ export default function PrescriptionPage() {
       // A4 모달 요소 찾기
       const a4Element = document.querySelector('.prescription-a4-modal') as HTMLElement;
       if (!a4Element) {
-        alert('A4 처방전을 찾을 수 없습니다.');
+        alert('문서를 찾을 수 없습니다.');
         return;
       }
 
-      // A4 크기로 고해상도 캡처 (210mm x 297mm)
+      // A4 크기로 고해상도 캡처
       const canvas = await html2canvas(a4Element, {
-        scale: 3, // 고해상도 (2520px x 3564px)
+        scale: 2,
         useCORS: true,
         allowTaint: false,
         backgroundColor: '#ffffff',
         logging: false,
-        imageTimeout: 0,
-        windowWidth: 840, // 210mm in pixels
-        windowHeight: 1188, // 297mm in pixels
       });
 
       // 모달이 원래 닫혀있었다면 다시 닫기
@@ -112,12 +87,10 @@ export default function PrescriptionPage() {
 
       // PNG로 다운로드
       const link = document.createElement('a');
-      const fileName = `마음처방전_${patientName || '처방전'}_${new Date().toISOString().split('T')[0]}.png`;
+      const fileName = `인생나침반_${patientName || '참여자'}.png`;
       link.download = fileName;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
-
-      console.log(`✅ 이미지 저장 완료: ${fileName} (${canvas.width}x${canvas.height}px)`);
     } catch (error) {
       console.error('이미지 저장 실패:', error);
       alert('이미지 저장 중 오류가 발생했습니다.');
@@ -126,29 +99,53 @@ export default function PrescriptionPage() {
 
   return (
     <>
+      <style jsx global>{`
+        @font-face {
+          font-family: 'YeongjuSeonbi';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2')
+            format('woff2');
+          font-weight: normal;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Shilla';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Shilla_CultureM-Medium.woff2')
+            format('woff2');
+          font-weight: 500;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'Shilla';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/Shilla_CultureB-Bold.woff2')
+            format('woff2');
+          font-weight: 700;
+          font-display: swap;
+        }
+      `}</style>
+
       {/* 인쇄 시 숨길 영역 */}
-      <div className="print:hidden min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="print:hidden min-h-screen bg-slate-100">
         {/* 헤더 */}
         <div className="bg-white shadow-sm border-b border-gray-200 py-4 px-6 sticky top-0 z-10">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <Link
               href="/"
-              className="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-2"
+              className="text-slate-600 hover:text-slate-800 font-semibold flex items-center gap-2"
             >
-              ← 프롬프트 생성기로
+              ← 항해 일지로
             </Link>
             <div className="flex gap-3">
               <button
                 onClick={saveAsImage}
                 disabled={!prescriptionText.trim()}
-                className="bg-purple-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+                className="bg-sky-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-sky-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
               >
-                💾 A4 이미지로 저장
+                💾 이미지 저장
               </button>
               <button
                 onClick={handlePrint}
                 disabled={!prescriptionText.trim()}
-                className="bg-green-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
+                className="bg-slate-700 text-white py-2 px-6 rounded-lg font-semibold hover:bg-slate-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 🖨️ 인쇄하기
               </button>
@@ -156,153 +153,78 @@ export default function PrescriptionPage() {
           </div>
         </div>
 
-        {/* 메인 컨텐츠 - 두 컬럼 */}
+        {/* 메인 컨텐츠 */}
         <div className="max-w-7xl mx-auto p-6">
-          <div className={`grid grid-cols-1 ${fromGemini ? '' : 'lg:grid-cols-2'} gap-6`}>
+          <div className={`grid grid-cols-1 ${fromGemini ? '' : 'lg:grid-cols-2'} gap-8`}>
             {/* 왼쪽: 입력 영역 - Gemini로 생성된 경우 숨김 */}
             {!fromGemini && (
               <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h1 className="text-2xl font-bold text-gray-900 mb-2">마음 처방전 뷰어</h1>
-                  <p className="text-gray-600 mb-6">
-                    AI가 생성한 처방전을 붙여넣으면 실제 처방전처럼 확인할 수 있습니다
-                  </p>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">나침반 뷰어</h1>
+                  <p className="text-gray-600 mb-6">AI가 생성한 항해 일지(XML)를 붙여넣어주세요.</p>
 
-                  <label
-                    htmlFor="prescription"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
-                    AI 생성 처방전 텍스트 (약품 + 조언)
-                  </label>
                   <textarea
-                    id="prescription"
                     value={prescriptionText}
                     onChange={e => setPrescriptionText(e.target.value)}
-                    placeholder='<prescription>
-  <section type="medicine">
-    <title>처방 약품</title>
-    <item>
-      <name>온기정</name>
-      <usage>외로움을 느낄 때 1정, 따뜻한 물과 함께 복용</usage>
-    </item>
-    <item>
-      <name>성장환</name>
-      <usage>하루 3번, 작은 성취를 기록하며 복용</usage>
-    </item>
-  </section>
-  <section type="notes">
-    <title>의사 소견</title>
-    <message>신청자님, 한 해 동안 고생 많으셨습니다.</message>
-    <message>올해의 경험을 보니 충분히 잘 성장하고 계십니다.</message>
-    <message>처방된 약을 꾸준히 복용하시면 좋은 결과가 있을 것입니다.</message>
-  </section>
-</prescription>
-
-(AI가 생성한 HTML 형식을 붙여넣으세요)'
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none font-mono text-sm h-96"
+                    placeholder="<compass>...</compass>"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent resize-none font-mono text-sm h-96"
                   />
-
-                  <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <p className="text-sm text-blue-800">
-                      💡 <strong>팁:</strong> AI가 생성한 &lt;prescription&gt; ~
-                      &lt;/prescription&gt; 전체를 복사하여 붙여넣으세요. HTML 형식으로 정확하게
-                      파싱됩니다.
-                    </p>
-                  </div>
                 </div>
               </div>
             )}
 
             {/* 오른쪽: A4 미리보기 영역 */}
             <div className={`sticky top-24 h-fit ${fromGemini ? 'mx-auto max-w-4xl' : ''}`}>
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-lg font-bold text-gray-900 mb-4">
-                  미리보기
-                  {fromGemini && (
-                    <span className="ml-3 text-sm text-gray-500 font-normal">
-                      클릭하면 A4 크기로 볼 수 있습니다
-                    </span>
-                  )}
-                </h2>
-
-                {/* A4 처방전 */}
+              {fromGemini && (
+                <div className="text-center mb-4">
+                  <p className="text-slate-600">아래 나침반을 클릭하면 크게 볼 수 있습니다.</p>
+                </div>
+              )}
+              <div className="bg-white rounded-xl shadow-2xl p-4 md:p-8">
+                {/* A4 문서 컨테이너 */}
                 <div
-                  className="prescription-viewport cursor-pointer hover:opacity-90 transition-opacity"
+                  className="prescription-viewport cursor-pointer hover:shadow-lg transition-transform hover:scale-[1.01]"
                   onClick={() => setShowA4Modal(true)}
-                  title="클릭하여 A4 크기로 보기"
+                  title="클릭하여 크게 보기"
                 >
                   <div className="prescription-a4" ref={previewRef}>
-                    {/* 처방전 헤더 */}
-                    <div className="prescription-header">
-                      <div className="clinic-info">
-                        <div className="clinic-logo">⚕️</div>
-                        <div className="clinic-name">인생처방의원</div>
-                        <div className="clinic-name-en">Life Prescription Clinic</div>
-                        <div className="clinic-address">전라남도 나주시 희망구 치유로 2025</div>
-                        <div className="clinic-contact">TEL: 061-LIFE-2025</div>
+                    {/* 문서 테두리 */}
+                    <div className="document-border">
+                      {/* 배경 워터마크 */}
+                      {/* 배경 워터마크 */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="/compass.png" alt="watermark" className="watermark" />
+
+                      {/* 헤더 */}
+                      <div className="doc-header">
+                        <h1 className="doc-title">인 생 나 침 반</h1>
+                        <div className="doc-subtitle">Life Compass</div>
+                        <div className="doc-date">{issueDate}</div>
                       </div>
 
-                      <div className="prescription-title-box">
-                        <h1 className="prescription-title">처 방 전</h1>
-                        <span className="prescription-number">
-                          처방전번호: {prescriptionNumber}
-                        </span>
+                      <div className="divider"></div>
+
+                      {/* 수신인 */}
+                      <div className="doc-recipient">
+                        <span className="label">항해 선장 : </span>
+                        <span className="name">{patientName} 님</span>
                       </div>
 
-                      <div className="patient-info-box">
-                        <table className="patient-table">
-                          <tbody>
-                            <tr>
-                              <td className="label">신청자 성명:</td>
-                              <td className="value">{patientName || '_______________'}</td>
-                              <td className="label">생년월일:</td>
-                              <td className="value">
-                                {patientBirthYear ? `${patientBirthYear}년` : '______년'}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="label">발급일:</td>
-                              <td className="value">{issueDate}</td>
-                              <td className="label">사용기간:</td>
-                              <td className="value">{validUntil}까지</td>
-                            </tr>
-                          </tbody>
-                        </table>
+                      {/* 본문 */}
+                      <div className="doc-body">
+                        <PrescriptionRenderer text={prescriptionText} />
                       </div>
-                    </div>
 
-                    {/* AI 생성 본문 */}
-                    <div className="prescription-body">
-                      <PrescriptionRenderer text={prescriptionText} />
-                    </div>
-
-                    {/* 처방전 푸터 */}
-                    <div className="prescription-footer">
-                      <div className="signature-section">
-                        <div className="signature-row">
-                          <span className="label">의료기관명:</span>
-                          <span className="value">인생처방의원</span>
-                          <span className="label">의사 성명:</span>
-                          <span className="value">Dr. 희망</span>
-                          <span className="seal">(인)</span>
+                      {/* 푸터 */}
+                      <div className="doc-footer">
+                        <div className="stamp-area">
+                          <span className="sender">
+                            인생 항해 위원회 <span className="sign-mark">(인)</span>
+                          </span>
+                          <span className="stamp">
+                            <span className="stamp-inner">인생나침반</span>
+                          </span>
                         </div>
-                        <div className="signature-row">
-                          <span className="label">AI의사 면허번호:</span>
-                          <span className="value">LIFE-2025-****</span>
-                        </div>
-                      </div>
-
-                      <div className="pharmacy-section">
-                        <div className="pharmacy-info">
-                          <span className="pharmacy-label">조제 약국:</span>
-                          <span className="pharmacy-name">마음약국</span>
-                          <span className="pharmacy-contact">TEL: 061-MIND-2025</span>
-                        </div>
-                      </div>
-
-                      <div className="prescription-notice">
-                        본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유
-                        계획을 꾸준히 실천해주세요.
                       </div>
                     </div>
                   </div>
@@ -316,75 +238,42 @@ export default function PrescriptionPage() {
       {/* 인쇄 전용 영역 */}
       <div className="hidden print:block print-only">
         <div className="prescription-print" ref={printRef}>
-          {/* 처방전 헤더 */}
-          <div className="prescription-header-print">
-            <div className="clinic-info-print">
-              <div className="clinic-logo-print">⚕️</div>
-              <div className="clinic-name-print">인생처방의원</div>
-              <div className="clinic-name-en-print">Life Prescription Clinic</div>
-              <div className="clinic-address-print">전라남도 나주시 희망구 치유로 2025</div>
-              <div className="clinic-contact-print">TEL: 061-LIFE-2025</div>
+          <div className="document-border-print">
+            {/* 배경 워터마크 */}
+            {/* 배경 워터마크 */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/compass.png" alt="watermark" className="watermark" />
+
+            {/* 헤더 */}
+            <div className="doc-header-print">
+              <h1 className="doc-title-print">인 생 나 침 반</h1>
+              <div className="doc-subtitle-print">Life Compass</div>
+              <div className="doc-date-print">{issueDate}</div>
             </div>
 
-            <div className="prescription-title-box-print">
-              <h1 className="prescription-title-print">처 방 전</h1>
-              <span className="prescription-number-print">처방전번호: {prescriptionNumber}</span>
+            <div className="divider-print"></div>
+
+            {/* 수신인 */}
+            <div className="doc-recipient-print">
+              <span className="label-print">항해 선장 : </span>
+              <span className="name-print">{patientName} 님</span>
             </div>
 
-            <div className="patient-info-box-print">
-              <table className="patient-table-print">
-                <tbody>
-                  <tr>
-                    <td className="label-print">신청자 성명:</td>
-                    <td className="value-print">{patientName || '_______________'}</td>
-                    <td className="label-print">생년월일:</td>
-                    <td className="value-print">
-                      {patientBirthYear ? `${patientBirthYear}년` : '______년'}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="label-print">발급일:</td>
-                    <td className="value-print">{issueDate}</td>
-                    <td className="label-print">사용기간:</td>
-                    <td className="value-print">{validUntil}까지</td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* 본문 */}
+            <div className="doc-body-print">
+              <PrescriptionRenderer text={prescriptionText} />
             </div>
-          </div>
 
-          {/* AI 생성 본문 */}
-          <div className="prescription-body-print">
-            <PrescriptionRenderer text={prescriptionText} />
-          </div>
-
-          {/* 처방전 푸터 */}
-          <div className="prescription-footer-print">
-            <div className="signature-section-print">
-              <div className="signature-row-print">
-                <span className="label-print">의료기관명:</span>
-                <span className="value-print">인생처방의원</span>
-                <span className="label-print">의사 성명:</span>
-                <span className="value-print">Dr. 희망</span>
-                <span className="seal-print">(인)</span>
+            {/* 푸터 */}
+            <div className="doc-footer-print">
+              <div className="stamp-area-print">
+                <span className="sender-print">
+                  인생 항해 위원회 <span className="sign-mark-print">(인)</span>
+                </span>
+                <span className="stamp-print">
+                  <div className="seal-circle">인생나침반</div>
+                </span>
               </div>
-              <div className="signature-row-print">
-                <span className="label-print">AI의사 면허번호:</span>
-                <span className="value-print">LIFE-2025-****</span>
-              </div>
-            </div>
-
-            <div className="pharmacy-section-print">
-              <div className="pharmacy-info-print">
-                <span className="pharmacy-label-print">조제 약국:</span>
-                <span className="pharmacy-name-print">마음약국</span>
-                <span className="pharmacy-contact-print">TEL: 061-MIND-2025</span>
-              </div>
-            </div>
-
-            <div className="prescription-notice-print">
-              본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유 계획을
-              꾸준히 실천해주세요.
             </div>
           </div>
         </div>
@@ -393,585 +282,388 @@ export default function PrescriptionPage() {
       {/* A4 모달 */}
       {showA4Modal && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setShowA4Modal(false)}
         >
           <div
-            className="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[95vh] overflow-auto"
+            className="rounded-lg max-w-5xl w-full max-h-[95vh] overflow-auto flex justify-center"
             onClick={e => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
-              <h3 className="text-xl font-bold text-gray-900">A4 처방전 미리보기</h3>
-              <button
-                onClick={() => setShowA4Modal(false)}
-                className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
-              >
-                ×
-              </button>
-            </div>
-            <div className="p-6 bg-gray-100">
-              <div className="prescription-a4-modal mx-auto">
-                {/* 처방전 헤더 */}
-                <div className="prescription-header">
-                  <div className="clinic-info">
-                    <div className="clinic-logo">⚕️</div>
-                    <div className="clinic-name">인생처방의원</div>
-                    <div className="clinic-name-en">Life Prescription Clinic</div>
-                    <div className="clinic-address">전라남도 나주시 희망구 치유로 2025</div>
-                    <div className="clinic-contact">TEL: 061-LIFE-2025</div>
-                  </div>
+            <div className="prescription-a4-modal">
+              <div className="document-border p-8 bg-white min-h-[297mm]">
+                {/* 배경 워터마크 */}
+                {/* 배경 워터마크 */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/compass.png" alt="watermark" className="watermark" />
 
-                  <div className="prescription-title-box">
-                    <h1 className="prescription-title">처 방 전</h1>
-                    <span className="prescription-number">처방전번호: {prescriptionNumber}</span>
+                {/* 헤더 */}
+                <div className="doc-header text-center">
+                  <h1 className="doc-title text-5xl mb-2 text-slate-800">인 생 나 침 반</h1>
+                  <div className="doc-subtitle text-xl text-slate-500 mb-4 tracking-widest uppercase">
+                    Life Compass
                   </div>
-
-                  <div className="patient-info-box">
-                    <table className="patient-table">
-                      <tbody>
-                        <tr>
-                          <td className="label">신청자 성명:</td>
-                          <td className="value">{patientName || '_______________'}</td>
-                          <td className="label">생년월일:</td>
-                          <td className="value">
-                            {patientBirthYear ? `${patientBirthYear}년` : '______년'}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="label">발급일:</td>
-                          <td className="value">{issueDate}</td>
-                          <td className="label">사용기간:</td>
-                          <td className="value">{validUntil}까지</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <div className="doc-date text-lg text-slate-500 mb-2">{issueDate}</div>
                 </div>
 
-                {/* AI 생성 본문 */}
-                <div className="prescription-body">
+                <div className="divider border-b-2 border-slate-300 mb-8 w-2/3 mx-auto"></div>
+
+                {/* 수신인 */}
+                <div className="doc-recipient text-left mb-10 pl-8">
+                  <span className="label text-2xl text-slate-700 font-serif">항해 선장 : </span>
+                  <span className="name text-3xl font-bold ml-4 text-slate-900">
+                    {patientName} 님
+                  </span>
+                </div>
+
+                {/* 본문 */}
+                <div className="doc-body min-h-[400px] px-8">
                   <PrescriptionRenderer text={prescriptionText} />
                 </div>
 
-                {/* 처방전 푸터 */}
-                <div className="prescription-footer">
-                  <div className="signature-section">
-                    <div className="signature-row">
-                      <span className="label">의료기관명:</span>
-                      <span className="value">인생처방의원</span>
-                      <span className="label">의사 성명:</span>
-                      <span className="value">Dr. 희망</span>
-                      <span className="seal">(인)</span>
+                {/* 푸터 */}
+                <div className="doc-footer mt-16 text-center">
+                  <div className="stamp-area flex flex-col items-center justify-center">
+                    <span className="sender text-2xl font-serif text-slate-800 mb-4">
+                      인생 항해 위원회 <span className="text-slate-300 text-lg ml-2">(인)</span>
+                    </span>
+                    <div className="relative inline-block">
+                      <div
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-10 border-4 border-double border-red-700 rounded-sm flex items-center justify-center text-red-700 text-lg font-bold opacity-80 rotate-[-2deg]"
+                        style={{
+                          top: '-5px',
+                          left: '30px',
+                          fontFamily: 'Shilla',
+                          letterSpacing: '2px',
+                        }}
+                      >
+                        인생나침반
+                      </div>
                     </div>
-                    <div className="signature-row">
-                      <span className="label">AI의사 면허번호:</span>
-                      <span className="value">LIFE-2025-****</span>
-                    </div>
-                  </div>
-
-                  <div className="pharmacy-section">
-                    <div className="pharmacy-info">
-                      <span className="pharmacy-label">조제 약국:</span>
-                      <span className="pharmacy-name">마음약국</span>
-                      <span className="pharmacy-contact">TEL: 061-MIND-2025</span>
-                    </div>
-                  </div>
-
-                  <div className="prescription-notice">
-                    본 처방전은 발급일로부터 7일간 유효합니다. | 마음의 건강을 위해 처방된 치유
-                    계획을 꾸준히 실천해주세요.
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <button
+            onClick={() => setShowA4Modal(false)}
+            className="fixed top-6 right-6 text-white hover:text-gray-300 text-4xl font-bold z-50"
+          >
+            ×
+          </button>
         </div>
       )}
 
       {/* 스타일 */}
       <style jsx>{`
+        /* 폰트 적용 */
+        .prescription-a4,
+        .prescription-print,
+        .prescription-a4-modal {
+          font-family: 'YeongjuSeonbi', serif;
+        }
+
         /* A4 비율 뷰포트 */
         .prescription-viewport {
           width: 100%;
           aspect-ratio: 210 / 297;
-          max-height: 70vh;
-          overflow: auto;
-          background: #e5e5e5;
-          border-radius: 8px;
-          padding: 16px;
+          overflow: hidden;
+          background: #fff;
         }
 
-        /* A4 처방전 */
+        /* A4 문서 스타일 */
         .prescription-a4 {
           width: 100%;
-          min-height: 100%;
-          background: white;
-          padding: 20px 30px;
-          border: 3px solid #0066cc;
-          font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+          height: 100%;
+          padding: 40px;
+          background: #fdfbf7;
+          position: relative;
         }
 
-        /* 헤더 스타일 */
-        .prescription-header {
-          margin-bottom: 16px;
-        }
-
-        .clinic-info {
-          text-align: center;
-          border-bottom: 2px solid #0066cc;
-          padding-bottom: 10px;
-          margin-bottom: 12px;
-        }
-
-        .clinic-logo {
-          font-size: 28px;
-          margin-bottom: 4px;
-        }
-
-        .clinic-name {
-          font-family: 'Noto Serif KR', serif;
-          font-size: 18px;
-          font-weight: 700;
-          color: #0066cc;
-          margin-bottom: 2px;
-        }
-
-        .clinic-name-en {
-          font-size: 10px;
-          color: #666;
-          letter-spacing: 0.5px;
-          margin-bottom: 6px;
-        }
-
-        .clinic-address {
-          font-size: 9px;
-          color: #666;
-          margin-bottom: 2px;
-        }
-
-        .clinic-contact {
-          font-size: 9px;
-          color: #666;
-        }
-
-        .prescription-title-box {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 10px;
-          padding: 6px 10px;
-          background: #f0f8ff;
-          border: 1px solid #0066cc;
-        }
-
-        .prescription-title {
-          font-size: 16px;
-          font-weight: 700;
-          letter-spacing: 3px;
-          margin: 0;
-        }
-
-        .prescription-number {
-          font-size: 9px;
-          color: #666;
-        }
-
-        .patient-info-box {
-          border: 1.5px solid #333;
-          background: #fafafa;
-          padding: 10px;
-          margin-bottom: 14px;
-        }
-
-        .patient-table {
+        .document-border {
           width: 100%;
-          font-size: 9px;
-        }
-
-        .patient-table td {
-          padding: 3px 6px;
-        }
-
-        .patient-table .label {
-          font-weight: 600;
-          color: #333;
-          width: 90px;
-        }
-
-        .patient-table .value {
-          color: #000;
-        }
-
-        /* 본문 */
-        .prescription-body {
-          min-height: 300px;
-          margin: 12px 0;
-        }
-
-        /* 푸터 */
-        .prescription-footer {
-          margin-top: 16px;
-        }
-
-        .signature-section {
-          border: 2px solid #000;
-          background: #fff9e6;
-          padding: 10px;
-          margin-bottom: 8px;
-        }
-
-        .signature-row {
+          height: 100%;
+          border: 6px double #5d4037;
+          background: white;
+          box-shadow: inset 0 0 40px rgba(93, 64, 55, 0.05);
+          padding: 40px;
           display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 9px;
+          flex-direction: column;
+          position: relative;
+          overflow: hidden; /* 이미지가 테두리를 넘지 않도록 */
+        }
+
+        .watermark {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 70%;
+          height: auto;
+          opacity: 0.15;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .doc-header,
+        .doc-recipient,
+        .doc-body,
+        .doc-footer,
+        .divider {
+          position: relative;
+          z-index: 1;
+        }
+
+        .doc-header {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+
+        .doc-date {
+          font-size: 14px;
+          color: #64748b;
+          margin-top: 5px;
+        }
+
+        .doc-title {
+          font-size: 36px;
+          color: #0f172a;
           margin-bottom: 5px;
+          letter-spacing: 8px;
         }
 
-        .signature-row:last-child {
-          margin-bottom: 0;
+        .doc-subtitle {
+          font-size: 12px;
+          color: #cbd5e1;
+          letter-spacing: 2px;
+          text-transform: uppercase;
         }
 
-        .signature-row .label {
-          font-weight: 600;
+        .divider {
+          height: 1px;
+          background: #8d6e63;
+          width: 60%;
+          margin: 0 auto 30px;
         }
 
-        .signature-row .seal {
-          width: 26px;
-          height: 26px;
-          border: 1px solid #cc0000;
-          border-radius: 50%;
-          display: inline-flex;
+        .doc-recipient {
+          font-size: 18px;
+          margin-bottom: 30px;
+          text-align: center;
+        }
+
+        .doc-recipient .name {
+          font-size: 24px;
+          font-weight: bold;
+          color: #2b1d0e;
+          border-bottom: 2px solid #5d4037;
+          padding: 0 10px 5px 10px;
+          display: inline-block;
+          min-width: 200px;
+        }
+
+        .doc-body {
+          flex: 1;
+          padding: 0 10px;
+        }
+
+        .doc-footer {
+          margin-top: 40px;
+          text-align: center;
+          padding-bottom: 20px;
+        }
+
+        .stamp-area {
+          position: relative;
+          display: inline-block;
+        }
+
+        .sender {
+          font-size: 20px;
+          margin-right: 0;
+          color: #334155;
+        }
+
+        .sign-mark {
+          font-size: 16px;
+          color: #cbd5e1;
+          margin-left: 40px;
+        }
+
+        .stamp {
+          display: inline-block;
+          position: relative;
+          width: 80px;
+          height: 32px;
+          vertical-align: middle;
+          margin-left: -50px;
+          z-index: 10;
+        }
+
+        .stamp-inner {
+          display: block;
+          width: 100%;
+          height: 100%;
+          border: 3px double #b91c1c;
+          border-radius: 2px;
+          color: #b91c1c;
+          font-size: 14px;
+          display: flex;
           align-items: center;
           justify-content: center;
-          color: #cc0000;
-          font-size: 9px;
-          margin-left: 6px;
-        }
-
-        /* 약국 섹션 */
-        .pharmacy-section {
-          border: 2px solid #10b981;
-          background: #f0fdf4;
-          padding: 8px 10px;
-          margin-bottom: 8px;
-        }
-
-        .pharmacy-info {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 9px;
-        }
-
-        .pharmacy-label {
-          font-weight: 600;
-          color: #10b981;
-        }
-
-        .pharmacy-name {
-          font-weight: 700;
-          color: #059669;
-          font-size: 10px;
-        }
-
-        .pharmacy-contact {
-          color: #666;
-          margin-left: auto;
-        }
-
-        .prescription-notice {
+          opacity: 0.85;
           text-align: center;
-          font-size: 7px;
-          color: #666;
-          padding: 6px;
-          background: #f0f0f0;
-          border-top: 1px solid #ccc;
+          font-family: 'Shilla', serif;
+          font-weight: 700;
+          transform: rotate(-2deg);
+          letter-spacing: 1px;
         }
 
         /* 인쇄 스타일 */
         @media print {
           @page {
             size: A4;
-            margin: 6mm;
+            margin: 0;
           }
 
           body {
             background: white !important;
           }
 
-          /* 미리보기 영역 완전히 숨김 */
-          .prescription-viewport,
-          .prescription-a4 {
+          .print:hidden {
             display: none !important;
           }
 
+          .print-only {
+            display: block !important;
+          }
+
           .prescription-print {
+            width: 210mm;
+            height: 297mm;
+            padding: 15mm;
+            box-sizing: border-box;
+          }
+
+          .document-border-print {
             width: 100%;
-            max-width: 190mm;
-            margin: 0 auto;
-            padding: 0;
-            font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            page-break-after: avoid;
-          }
-
-          .prescription-header-print {
-            border: 2.5px solid #0066cc;
-            padding: 6pt 10pt;
-            margin-bottom: 4pt;
-            page-break-inside: avoid;
-          }
-
-          .clinic-info-print {
-            text-align: center;
-            border-bottom: 1.5px solid #0066cc;
-            padding-bottom: 4pt;
-            margin-bottom: 4pt;
-          }
-
-          .clinic-logo-print {
-            font-size: 14pt;
-            margin-bottom: 2pt;
-          }
-
-          .clinic-name-print {
-            font-family: 'Noto Serif KR', serif;
-            font-size: 11pt;
-            font-weight: 700;
-            color: #0066cc;
-          }
-
-          .clinic-name-en-print {
-            font-size: 6.5pt;
-            color: #666;
-          }
-
-          .clinic-address-print,
-          .clinic-contact-print {
-            font-size: 6pt;
-            color: #666;
-          }
-
-          .prescription-title-box-print {
+            height: 100%;
+            border: 2mm double #5d4037;
+            padding: 8mm;
             display: flex;
-            justify-content: space-between;
-            padding: 4pt 8pt;
-            background: #f0f8ff;
-            border: 1px solid #0066cc;
-            margin-bottom: 6pt;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            background: white;
           }
 
-          .prescription-title-print {
+          .watermark {
+            width: 80%;
+            height: auto;
+            opacity: 0.12;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+
+          .doc-header-print,
+          .doc-recipient-print,
+          .doc-body-print,
+          .doc-footer-print,
+          .divider-print {
+            position: relative;
+            z-index: 1;
+          }
+
+          .doc-header-print {
+            text-align: center;
+            margin-bottom: 8mm;
+          }
+
+          .doc-date-print {
+            font-size: 12pt;
+            color: #64748b;
+          }
+
+          .doc-title-print {
+            font-size: 32pt;
+            letter-spacing: 10pt;
+            margin-bottom: 2mm;
+            font-family: 'YeongjuSeonbi', serif;
+            color: #0f172a;
+          }
+
+          .doc-subtitle-print {
             font-size: 10pt;
-            font-weight: 700;
-            letter-spacing: 2pt;
+            color: #94a3b8;
+            letter-spacing: 3pt;
+            text-transform: uppercase;
           }
 
-          .prescription-number-print {
-            font-size: 6.5pt;
-            color: #666;
+          .divider-print {
+            border-bottom: 1pt solid #cbd5e1;
+            width: 60%;
+            margin: 0 auto 10mm;
           }
 
-          .patient-info-box-print {
-            border: 1px solid #333;
-            background: #fafafa;
-            padding: 8pt;
-            margin-bottom: 4pt;
-          }
-
-          .patient-table-print {
-            width: 100%;
-            font-size: 7.5pt;
-          }
-
-          .patient-table-print td {
-            padding: 2pt 3pt;
-          }
-
-          .label-print {
-            font-weight: 600;
-            width: 85pt;
-          }
-
-          .value-print {
-            color: #000;
-            font-weight: 500;
-          }
-
-          .prescription-body-print {
-            min-height: 380pt;
-            padding: 0 6pt;
-            margin: 6pt 0;
-          }
-
-          /* PrescriptionRenderer 컴포넌트 인쇄 스타일 */
-          .prescription-body-print :global(.section-title) {
-            background: #0066cc;
-            color: white;
-            padding: 4pt 8pt;
-            font-weight: 700;
-            font-size: 9pt;
-            margin: 5pt 0 3pt 0;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-
-          .prescription-body-print :global(.medicine-table) {
-            width: 100%;
-            border-collapse: collapse;
-            border: 0.5pt solid #cccccc;
-            margin-bottom: 6pt;
-          }
-
-          .prescription-body-print :global(.medicine-table th) {
-            background: #f0f0f0;
-            border: 0.5pt solid #cccccc;
-            padding: 3pt 4pt;
-            font-weight: 600;
-            font-size: 7.5pt;
+          .doc-recipient-print {
+            font-size: 16pt;
+            margin-bottom: 8mm;
             text-align: center;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            border-left: none;
+            padding-left: 0;
           }
 
-          .prescription-body-print :global(.medicine-table td) {
-            border: 0.5pt solid #cccccc;
-            padding: 3pt 4pt;
-            font-size: 7.5pt;
-            line-height: 1.4;
+          .doc-recipient-print .name-print {
+            border-bottom: 1pt solid #5d4037;
+            padding-bottom: 2mm;
+            display: inline-block;
+            min-width: 60mm;
+            font-weight: bold;
           }
 
-          .prescription-body-print :global(.medicine-name) {
-            font-weight: 600;
-            color: #0066cc;
+          .doc-body-print {
+            flex: 1;
           }
 
-          .prescription-body-print :global(.usage-row) {
-            background: #f9f9f9;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+          .doc-footer-print {
+            text-align: center;
+            margin-top: 10mm;
           }
 
-          .prescription-body-print :global(.usage-instruction) {
-            color: #333;
-            font-size: 6.5pt;
-            padding-left: 6pt;
-            line-height: 1.4;
+          .sender-print {
+            font-size: 18pt;
+            margin-right: 0;
           }
 
-          .prescription-body-print :global(.notes-section) {
-            border-top: 1pt solid #333;
-            padding-top: 6pt;
-            margin-top: 6pt;
+          .sign-mark-print {
+            font-size: 14pt;
+            color: #cbd5e1;
+            margin-left: 25mm;
           }
 
-          .prescription-body-print :global(.note-paragraph) {
-            padding: 4pt 8pt;
-            margin: 3pt 0;
-            border-left: 2.5pt solid #0066cc;
-            background: #f9f9f9;
-            font-size: 8pt;
-            line-height: 1.6;
-            font-weight: 500;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-
-          .prescription-footer-print {
-            border-top: 1.5px solid #333;
-            padding-top: 6pt;
-            margin-top: 6pt;
-            page-break-inside: avoid;
-          }
-
-          .signature-section-print {
-            border: 1px solid #000;
-            background: #fff9e6;
-            padding: 4pt 6pt;
-            margin-bottom: 3pt;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-
-          .signature-row-print {
-            display: flex;
-            gap: 3pt;
-            font-size: 7.5pt;
-            margin-bottom: 2pt;
-          }
-
-          .seal-print {
-            width: 14pt;
-            height: 14pt;
-            border: 1px solid #cc0000;
-            border-radius: 50%;
+          .seal-circle {
             display: inline-flex;
+            width: 35mm;
+            height: 12mm;
+            border: 1mm double #b91c1c;
+            border-radius: 1mm;
+            background-color: transparent;
+            vertical-align: middle;
             align-items: center;
             justify-content: center;
-            color: #cc0000;
-            font-size: 7pt;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-
-          .pharmacy-section-print {
-            border: 1px solid #10b981;
-            background: #f0fdf4;
-            padding: 4pt 6pt;
-            margin-bottom: 3pt;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-
-          .pharmacy-info-print {
-            display: flex;
-            align-items: center;
-            gap: 4pt;
-            font-size: 7.5pt;
-          }
-
-          .pharmacy-label-print {
-            font-weight: 600;
-            color: #10b981;
-          }
-
-          .pharmacy-name-print {
+            color: #b91c1c;
+            font-size: 14pt;
             font-weight: 700;
-            color: #059669;
-            font-size: 8pt;
-          }
-
-          .pharmacy-contact-print {
-            color: #666;
-            margin-left: auto;
-          }
-
-          .prescription-notice-print {
             text-align: center;
-            font-size: 6pt;
-            color: #666;
-            padding: 2.5pt;
-            background: #f0f0f0;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            font-family: 'Shilla', serif;
+            letter-spacing: 1pt;
+            transform: rotate(-1.5deg);
+            opacity: 0.9;
+            margin-left: -25mm;
+            position: relative;
+            z-index: 10;
           }
-        }
-
-        /* 모바일 반응형 */
-        @media (max-width: 1024px) {
-          .prescription-viewport {
-            max-height: 500px;
-          }
-        }
-
-        /* A4 모달 스타일 */
-        .prescription-a4-modal {
-          width: 210mm;
-          min-height: 297mm;
-          background: white;
-          padding: 20px 30px;
-          border: 3px solid #0066cc;
-          font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
         }
       `}</style>
     </>

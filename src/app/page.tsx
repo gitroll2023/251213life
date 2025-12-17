@@ -18,98 +18,55 @@ export default function Home() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [dummyIconIndex, setDummyIconIndex] = useState(0);
 
   const generatePrompt = () => {
     const currentYear = new Date().getFullYear();
     const age = birthYear ? currentYear - parseInt(birthYear) : 0;
 
-    const prompt = `당신은 따뜻하고 통찰력 있는 '인생처방의원'의 전문 의사입니다.
-신청자의 한 해를 진단하고, 마음 치유를 위한 처방전을 작성해주세요.
+    const prompt = `당신은 인생이라는 거친 바다에서 방향을 잡아주는 지혜로운 '인생 나침반'입니다.
+신청자(선장)의 비바람 쳤던 지난 항해(2025년)를 위로하고, 2026년의 새로운 항해를 위한 방향을 제시해주세요.
 
-**신청자 정보:**
-- 성명: ${name}
-- 출생연도: ${birthYear}년생 (만 ${age}세)
+**⚓ 선장 정보:**
+- 성함: ${name}
+- 나이: ${birthYear}년생 (만 ${age}세)
 - 성별: ${gender}
-- 진료일: 2025년 12월
-- 주 증상: 한 해 돌아보기 및 내년 준비
+- 2025년 만난 파도(기억에 남는 일): ${memory}
+- 항해의 아쉬움(후회되는 점): ${regret}
+- 2026년 항로(새해 목표): ${plan}
 
-**신청자 상태:**
-- 올해 긍정적 경험: ${memory}
-- 올해 어려움/아쉬움: ${regret}
-- 내년 치유 목표: ${plan}
+**🧭 '인생 나침반' 메시지 작성 규칙:**
 
-**🏥 처방전 작성 규칙:**
+1. **톤앤매너:**
+   - 인생을 '항해'에 비유하여 문학적이고 감동적으로 작성
+   - 거친 파도를 넘온 선장(${name})에게 보내는 경의와 격려의 어조
+   - 든든한 등대처럼 따뜻하고 희망적인 메시지
+   - **글자 크기가 큰 출력물에 들어갈 내용이므로, 문장은 간결하고 짧게 작성 (매우 중요)**
+   - **전체 내용은 반드시 5~6개의 짧은 문단으로 구성하며, 절대 길어지지 않도록 주의 (A4 용지 한 장 초과 방지)**
 
-1. 약품명 작명 규칙:
-   - 한글 의미 + 제형 (정/환/산/캡슐/시럽)
-   - 예: 온기정, 평온환, 시작산, 활력캡슐, 휴식시럽
-   - 감성적이면서도 의약품처럼 들리게
+2. **메시지 구성 가이드 (필수 포함 내용):**
+   - **거친 파도를 넘은 위로**: 2025년의 파도("${memory}")를 무사히 건너온 용기와 노고를 치하
+   - **아쉬움의 포용**: 아쉬운 점("${regret}")은 더 단단한 배를 만들기 위한 과정임을 격려
+   - **새로운 항해의 응원**: 2026년의 목표("${plan}")를 향해 키를 잡은 선장을 응원
+   - **★ '새로운 배움'의 항로 권유 (핵심 필수사항)**:
+     - ${age}세라는 나이는 새로운 미지의 바다(배움)를 탐험하기에 가장 좋은 때임을 강조
+     - "배움이라는 나침반을 챙기세요", "새로운 지식의 섬을 찾아 떠나세요" 등 항해 은유를 사용하여 새로운 도전과 학습을 권유
+     - 끊임없이 배우고 도전하는 것이야말로 멈추지 않는 항해의 동력임을 조언
 
-2. 복용법 작성:
-   - "마음이 힘들 때 1정씩 복용"
-   - "하루 3번, 식후 30분에 복용"
-   - "잠들기 전 1회, 따뜻한 물과 함께"
-   - "매일 아침, 거울 앞에서 복용"
+3. **출력 형식 (XML):**
 
-3. 의사 소견:
-   - 신청자 이름(${name}) 사용
-   - 나이(${age}세), 성별(${gender}) 고려
-   - 따뜻하면서도 전문적인 톤
-   - 희망과 응원의 메시지
-
-**⚠️ 금지 사항:**
-- 정신과 관련 용어 사용 금지 (우울증, 불안증 등)
-- 실제 질병/약품명 사용 금지
-
-**📋 출력 형식 (아래는 형식 예시일 뿐, 내용은 신청자에 맞게 완전히 새로 작성!):**
-
-<prescription>
-  <section type="medicine">
-    <title>처방 약품</title>
-    <item>
-      <name>온기정</name>
-      <usage>외로움을 느낄 때 1정, 따뜻한 물과 함께 복용</usage>
-    </item>
-    <item>
-      <name>성장환</name>
-      <usage>하루 3번, 작은 성취를 기록하며 복용</usage>
-    </item>
+<compass>
+  <section type="advice">
+    <title>2026 인생 나침반</title>
+    <message>${name} 선장님, 2025년이라는 거친 바다를 헤치고 여기까지 오시느라 정말 수고 많으셨습니다.</message>
+    <message>지난 항해에서 마주한 "${memory}"라는 파도는 당신을 더욱 노련한 선장으로 만들었을 것입니다.</message>
+    <message>비록 "${regret}" 같은 역풍이 있었을지라도, 그것은 앞으로 나아갈 추진력이 되어줄 것입니다.</message>
+    <message>이제 2026년, "${plan}"라는 희망의 닻을 올리고 다시 한번 힘차게 출항하십시오.</message>
+    <message>무엇보다 이번 항해에서는 '새로운 배움'이라는 미지의 보물을 찾아 떠나보시길 권합니다.</message>
+    <message>나이라는 숫자에 얽매이지 않고 끊임없이 배우고 도전할 때, 당신의 항해는 언제나 푸른 청춘의 바다 위에 있을 것입니다.</message>
   </section>
+</compass>
 
-  <section type="notes">
-    <title>의사 소견</title>
-    <message>${name} 신청자님, 한 해 동안 정말 고생 많으셨습니다.</message>
-    <message>올해의 긍정적 경험("${memory}")을 보니 충분히 잘 성장하고 계십니다.</message>
-    <message>올해의 어려움("${regret}")은 누구에게나 있는 자연스러운 과정입니다.</message>
-    <message>${age}세의 지금, 신청자님께 특별히 권하고 싶은 것은 새로운 배움에 도전해보시는 것입니다.</message>
-    <message>나이는 배움의 장애가 아니라 오히려 깊이를 더해주며, 새로운 공부는 삶에 활력을 불어넣습니다.</message>
-    <message>2026년 1월부터는 새로운 배움과 도전에 시간을 투자하며 시작하는 한 해가 되길 진심으로 응원합니다.</message>
-  </section>
-</prescription>
-
-⚠️ **위 예시는 형식 참고용입니다. 실제 내용은 반드시 신청자 정보에 맞춰 완전히 새롭게 작성하세요!**
-
-**작성 가이드:**
-- medicine 섹션: "${memory}"와 "${plan}"를 깊이 분석하여 **2-3개** 맞춤형 약품 작성
-  - 약품명: 창의적이고 신청자 상황에 딱 맞는 이름
-  - 복용법: 구체적이고 실천 가능한 방법
-
-- notes 섹션: **${age}세 ${gender} 신청자만을 위한** 4-6개 message 작성
-  1. **개인화된 인사**: 이름(${name})과 한 해 노고 진심으로 인정
-  2. **구체적 칭찬**: "${memory}"의 구체적 내용 언급하며 격려
-  3. **공감 위로**: "${regret}"의 감정을 이해하고 따뜻하게 위로
-  4. **새로운 배움 권유 (필수)**:
-     - ${age}세라는 나이는 새로운 배움을 시작하기에 완벽한 시기임을 강조
-     - 구체적 활동은 절대 추천하지 말고, "새로운 배움", "새로운 도전", "새로운 공부"처럼 추상적으로 표현
-     - 배움은 나이와 무관하며, 오히려 경험이 배움을 더 풍요롭게 만든다는 철학
-  5. **배움의 가치 강조**: 새로운 것을 배우는 과정 자체가 삶을 풍요롭게 만든다는 메시지
-  6. **2026년 배움 응원 (필수)**: 2026년 1월부터는 새로운 배움에 시간을 투자하며 시작하는 한 해가 되길 응원
-
-❗ **중요**:
-- 위 예시 문구를 절대 그대로 사용하지 마세요
-- 매번 완전히 다른, 신청자에게 딱 맞는 내용으로 작성
-- XML/HTML 태그 구조만 정확히 지키면 됩니다`;
+⚠️ **위 예시는 참고용입니다. 실제 내용은 신청자의 항해 일지("${memory}", "${regret}", "${plan}")에 맞춰, 항해(바다, 파도, 바람, 배, 닻, 나침반 등)의 은유를 사용하여 감동적으로 새로 작성해주세요.**`;
 
     setGeneratedPrompt(prompt);
   };
@@ -124,99 +81,39 @@ export default function Home() {
     }
   };
 
-  // 더미 데이터 버튼 아이콘 렌더링
-  const renderDummyIcon = () => {
-    const icons = [
-      // 주사위 아이콘
-      <svg key="dice" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-        />
-      </svg>,
-      // 반짝이 아이콘
-      <svg key="sparkles" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-        />
-      </svg>,
-      // 마법봉 아이콘
-      <svg key="wand" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>,
-      // 셔플 아이콘
-      <svg key="shuffle" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-        />
-      </svg>,
-      // 리프레시 아이콘
-      <svg key="refresh" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-        />
-      </svg>,
-    ];
-    return icons[dummyIconIndex];
-  };
-
   const fillDummyData = () => {
     const dummyDataSets = [
       {
         name: '홍길동',
-        birthYear: '1990',
+        birthYear: '1960',
         gender: '남성',
-        memory: '회사에서 큰 프로젝트를 성공적으로 완수하고 팀원들과 함께 성장한 경험',
-        regret: '건강 관리에 소홀해서 체력이 많이 떨어진 것',
-        plan: '매일 30분씩 운동하고, 명상으로 마음의 평온 찾기',
+        memory: '정년 퇴임 후 혼자 떠난 제주도 여행',
+        regret: '친구들에게 먼저 연락하지 못한 소홀함',
+        plan: '바리스타 자격증 따서 주말 봉사하기',
       },
       {
-        name: '김영희',
-        birthYear: '1985',
-        gender: '여성',
-        memory: '새로운 취미로 시작한 요가를 통해 내면의 평화를 찾은 경험',
-        regret: '가족과 함께하는 시간을 충분히 만들지 못한 것',
-        plan: '주말마다 가족과 함께 여행하고, 일주일에 3번 요가 수련하기',
-      },
-      {
-        name: '박민수',
-        birthYear: '1995',
+        name: '이순신',
+        birthYear: '1958',
         gender: '남성',
-        memory: '첫 마라톤 완주에 성공하며 끈기와 인내를 배운 경험',
-        regret: '독서 목표를 달성하지 못하고 스마트폰에 너무 많은 시간을 쏟은 것',
-        plan: '매달 2권 이상 책 읽기, 하루 스마트폰 사용 시간 2시간 이내로 제한하기',
+        memory: '손녀가 태어나서 처음 안아본 순간',
+        regret: '건강 검진을 미루다가 경고를 받은 일',
+        plan: '매일 아침 수영 배우기',
       },
       {
-        name: '이수진',
-        birthYear: '1988',
-        gender: '여성',
-        memory: '오랜만에 친구들과 재회하며 소중한 인연의 가치를 깨달은 경험',
-        regret: '자기계발에 투자하지 못하고 현상 유지에만 머물렀던 것',
-        plan: '온라인 강의로 새로운 기술 배우기, 월 1회 독서 모임 참여하기',
-      },
-      {
-        name: '최민상',
-        birthYear: '1992',
+        name: '김유신',
+        birthYear: '1970',
         gender: '남성',
-        memory: '처음으로 봉사활동을 시작하며 나눔의 기쁨을 느낀 경험',
-        regret: '재정 관리를 제대로 하지 못해 저축 목표를 달성하지 못한 것',
-        plan: '매달 수입의 20% 저축하기, 분기마다 1회 봉사활동 참여하기',
+        memory: '직장에서 프로젝트 대상을 수상한 일',
+        regret: '가족들과 저녁 식사를 자주 하지 못한 것',
+        plan: '가족들과 함께하는 캠핑 시작하기',
+      },
+      {
+        name: '강감찬',
+        birthYear: '1965',
+        gender: '남성',
+        memory: '텃밭을 가꾸며 첫 수확의 기쁨을 맛본 일',
+        regret: '책을 한 권도 끝까지 읽지 못한 것',
+        plan: '매월 1권 독서하고 독서 노트 쓰기',
       },
     ];
 
@@ -228,14 +125,11 @@ export default function Home() {
     setMemory(randomData.memory);
     setRegret(randomData.regret);
     setPlan(randomData.plan);
-
-    // 아이콘도 랜덤하게 변경 (5개 아이콘 순환)
-    setDummyIconIndex(prev => (prev + 1) % 5);
   };
 
   const handleGenerateClick = () => {
     if (!name || !birthYear || !gender || !memory || !regret || !plan) {
-      alert('모든 항목을 입력해주세요.');
+      alert('항해 일지를 모두 기록해주세요.');
       return;
     }
     setShowConfirmModal(true);
@@ -249,92 +143,49 @@ export default function Home() {
       const currentYear = new Date().getFullYear();
       const age = birthYear ? currentYear - parseInt(birthYear) : 0;
 
-      const prompt = `당신은 따뜻하고 통찰력 있는 '인생처방의원'의 전문 의사입니다.
-신청자의 한 해를 진단하고, 마음 치유를 위한 처방전을 작성해주세요.
-
-**신청자 정보:**
-- 성명: ${name}
-- 출생연도: ${birthYear}년생 (만 ${age}세)
-- 성별: ${gender}
-- 진료일: 2025년 12월
-- 주 증상: 한 해 돌아보기 및 내년 준비
-
-**신청자 상태:**
-- 올해 긍정적 경험: ${memory}
-- 올해 어려움/아쉬움: ${regret}
-- 내년 치유 목표: ${plan}
-
-**🏥 처방전 작성 규칙:**
-
-1. 약품명 작명 규칙:
-   - 한글 의미 + 제형 (정/환/산/캡슐/시럽)
-   - 예: 온기정, 평온환, 시작산, 활력캡슐, 휴식시럽
-   - 감성적이면서도 의약품처럼 들리게
-
-2. 복용법 작성:
-   - "마음이 힘들 때 1정씩 복용"
-   - "하루 3번, 식후 30분에 복용"
-   - "잠들기 전 1회, 따뜻한 물과 함께"
-   - "매일 아침, 거울 앞에서 복용"
-
-3. 의사 소견:
-   - 신청자 이름(${name}) 사용
-   - 나이(${age}세), 성별(${gender}) 고려
-   - 따뜻하면서도 전문적인 톤
-   - 희망과 응원의 메시지
-
-**⚠️ 금지 사항:**
-- 정신과 관련 용어 사용 금지 (우울증, 불안증 등)
-- 실제 질병/약품명 사용 금지
-
-**📋 출력 형식 (아래는 형식 예시일 뿐, 내용은 신청자에 맞게 완전히 새로 작성!):**
-
-<prescription>
-  <section type="medicine">
-    <title>처방 약품</title>
-    <item>
-      <name>온기정</name>
-      <usage>외로움을 느낄 때 1정, 따뜻한 물과 함께 복용</usage>
-    </item>
-    <item>
-      <name>성장환</name>
-      <usage>하루 3번, 작은 성취를 기록하며 복용</usage>
-    </item>
-  </section>
-
-  <section type="notes">
-    <title>의사 소견</title>
-    <message>${name} 신청자님, 한 해 동안 정말 고생 많으셨습니다.</message>
-    <message>올해의 긍정적 경험("${memory}")을 보니 충분히 잘 성장하고 계십니다.</message>
-    <message>올해의 어려움("${regret}")은 누구에게나 있는 자연스러운 과정입니다.</message>
-    <message>${age}세의 지금, 신청자님께 특별히 권하고 싶은 것은 새로운 배움에 도전해보시는 것입니다.</message>
-    <message>나이는 배움의 장애가 아니라 오히려 깊이를 더해주며, 새로운 공부는 삶에 활력을 불어넣습니다.</message>
-    <message>2026년 1월부터는 새로운 배움과 도전에 시간을 투자하며 시작하는 한 해가 되길 진심으로 응원합니다.</message>
-  </section>
-</prescription>
-
-⚠️ **위 예시는 형식 참고용입니다. 실제 내용은 반드시 신청자 정보에 맞춰 완전히 새롭게 작성하세요!**
-
-**작성 가이드:**
-- medicine 섹션: "${memory}"와 "${plan}"를 깊이 분석하여 **2-3개** 맞춤형 약품 작성
-  - 약품명: 창의적이고 신청자 상황에 딱 맞는 이름
-  - 복용법: 구체적이고 실천 가능한 방법
-
-- notes 섹션: **${age}세 ${gender} 신청자만을 위한** 4-6개 message 작성
-  1. **개인화된 인사**: 이름(${name})과 한 해 노고 진심으로 인정
-  2. **구체적 칭찬**: "${memory}"의 구체적 내용 언급하며 격려
-  3. **공감 위로**: "${regret}"의 감정을 이해하고 따뜻하게 위로
-  4. **새로운 배움 권유 (필수)**:
-     - ${age}세라는 나이는 새로운 배움을 시작하기에 완벽한 시기임을 강조
-     - 구체적 활동은 절대 추천하지 말고, "새로운 배움", "새로운 도전", "새로운 공부"처럼 추상적으로 표현
-     - 배움은 나이와 무관하며, 오히려 경험이 배움을 더 풍요롭게 만든다는 철학
-  5. **배움의 가치 강조**: 새로운 것을 배우는 과정 자체가 삶을 풍요롭게 만든다는 메시지
-  6. **2026년 배움 응원 (필수)**: 2026년 1월부터는 새로운 배움에 시간을 투자하며 시작하는 한 해가 되길 응원
-
-❗ **중요**:
-- 위 예시 문구를 절대 그대로 사용하지 마세요
-- 매번 완전히 다른, 신청자에게 딱 맞는 내용으로 작성
-- XML/HTML 태그 구조만 정확히 지키면 됩니다`;
+      const prompt = `당신은 인생이라는 거친 바다에서 방향을 잡아주는 지혜로운 '인생 나침반'입니다.
+    신청자(선장)의 비바람 쳤던 지난 항해(2025년)를 위로하고, 2026년의 새로운 항해를 위한 방향을 제시해주세요.
+    
+    **⚓ 선장 정보:**
+    - 성함: ${name}
+    - 나이: ${birthYear}년생 (만 ${age}세)
+    - 성별: ${gender}
+    - 2025년 만난 파도(기억에 남는 일): ${memory}
+    - 항해의 아쉬움(후회되는 점): ${regret}
+    - 2026년 항로(새해 목표): ${plan}
+    
+    **🧭 '인생 나침반' 메시지 작성 규칙:**
+    
+    1. **톤앤매너:**
+       - 인생을 '항해'에 비유하여 문학적이고 감동적으로 작성
+       - 거친 파도를 넘온 선장(${name})에게 보내는 경의와 격려의 어조
+       - 든든한 등대처럼 따뜻하고 희망적인 메시지
+       - **글자 크기가 큰 출력물에 들어갈 내용이므로, 문장은 간결하고 울림 있게(약 5-6문장)**
+    
+    2. **메시지 구성 가이드 (필수 포함 내용):**
+       - **거친 파도를 넘은 위로**: 2025년의 파도("${memory}")를 무사히 건너온 용기와 노고를 치하
+       - **아쉬움의 포용**: 아쉬운 점("${regret}")은 더 단단한 배를 만들기 위한 과정임을 격려
+       - **새로운 항해의 응원**: 2026년의 목표("${plan}")를 향해 키를 잡은 선장을 응원
+       - **★ '새로운 배움'의 항로 권유 (핵심 필수사항)**:
+         - ${age}세라는 나이는 새로운 미지의 바다(배움)를 탐험하기에 가장 좋은 때임을 강조
+         - "배움이라는 나침반을 챙기세요", "새로운 지식의 섬을 찾아 떠나세요" 등 항해 은유를 사용하여 새로운 도전과 학습을 권유
+         - 끊임없이 배우고 도전하는 것이야말로 멈추지 않는 항해의 동력임을 조언
+    
+    3. **출력 형식 (XML):**
+    
+    <compass>
+      <section type="advice">
+        <title>2026 인생 나침반</title>
+        <message>${name} 선장님, 2025년이라는 거친 바다를 헤치고 여기까지 오시느라 정말 수고 많으셨습니다.</message>
+        <message>지난 항해에서 마주한 "${memory}"라는 파도는 당신을 더욱 노련한 선장으로 만들었을 것입니다.</message>
+        <message>비록 "${regret}" 같은 역풍이 있었을지라도, 그것은 앞으로 나아갈 추진력이 되어줄 것입니다.</message>
+        <message>이제 2026년, "${plan}"라는 희망의 닻을 올리고 다시 한번 힘차게 출항하십시오.</message>
+        <message>무엇보다 이번 항해에서는 '새로운 배움'이라는 미지의 보물을 찾아 떠나보시길 권합니다.</message>
+        <message>나이라는 숫자에 얽매이지 않고 끊임없이 배우고 도전할 때, 당신의 항해는 언제나 푸른 청춘의 바다 위에 있을 것입니다.</message>
+      </section>
+    </compass>
+    
+    ⚠️ **위 예시는 참고용입니다. 실제 내용은 신청자의 항해 일지("${memory}", "${regret}", "${plan}")에 맞춰, 항해(바다, 파도, 바람, 배, 닻, 나침반 등)의 은유를 사용하여 감동적으로 새로 작성해주세요.**`;
 
       const response = await fetch('/api/generate-prescription', {
         method: 'POST',
@@ -351,16 +202,16 @@ export default function Home() {
 
       const data = await response.json();
 
-      // 처방전 번호 생성
+      // 번호 생성
       const now = new Date();
       const year = now.getFullYear();
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const random = Math.floor(Math.random() * 10000)
         .toString()
         .padStart(4, '0');
-      const prescriptionNumber = `RX-${year}-${month}-${random}`;
+      const prescriptionNumber = `LOG-${year}-${month}-${random}`;
 
-      // DB에 저장
+      // DB에 저장 (api/prescriptions 재사용)
       try {
         await fetch('/api/prescriptions', {
           method: 'POST',
@@ -381,9 +232,8 @@ export default function Home() {
         console.error('DB 저장 에러 (계속 진행):', dbError);
       }
 
-      // 처방전이 생성되면 자동으로 로컬 스토리지에 저장
+      // 로컬 스토리지에 저장
       localStorage.setItem('prescription', data.prescription);
-      // 신청자 정보도 함께 저장
       localStorage.setItem(
         'patientInfo',
         JSON.stringify({
@@ -393,44 +243,50 @@ export default function Home() {
         })
       );
 
-      // 바로 처방전 뷰어 페이지로 이동
+      // 뷰어 페이지로 이동
       router.push('/receipt');
     } catch (error) {
       console.error('AI 생성 에러:', error);
       setIsGenerating(false);
       alert(
-        `처방전 생성 중 오류가 발생했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}\n\n다시 시도해주세요.`
+        `생성 중 오류가 발생했습니다: ${error instanceof Error ? error.message : '알 수 없는 오류'}\n\n다시 시도해주세요.`
       );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-sky-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12 fade-in">
-          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm mb-6 border border-gray-200">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-            <span className="text-sm font-medium text-gray-600">AI 처방전</span>
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-6 border border-sky-200">
+            <span className="text-xl">⚓</span>
+            <span className="text-sm font-bold text-sky-700">인생은 거대한 항해입니다</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-gray-900">
-            마음 처방전 생성기
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-slate-800 tracking-tight">
+            [ 나의 항해 일지 ]{' '}
+            <span className="text-sky-600 font-light text-2xl md:text-4xl block mt-2">
+              : 2025-2026
+            </span>
           </h1>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            올 한 해를 돌아보고, 마음을 치유하는 특별한 처방전을 만들어보세요
+          <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            거친 파도를 넘어온 당신의 기록을 남겨주세요.
+            <br />
+            작성하신 내용을 바탕으로 길을 밝혀줄{' '}
+            <span className="font-bold text-slate-800">[인생 나침반]</span> 메시지를 드립니다.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/receipt"
-              className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white py-2.5 px-5 rounded-lg font-medium transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 bg-sky-700 hover:bg-sky-800 text-white py-3 px-6 rounded-lg font-bold transition-all shadow-md hover:shadow-lg"
             >
-              💊 처방전 뷰어 & 인쇄하기
+              🧭 나침반(결과) 확인하기
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M9 5l7 7-7 7"
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
             </Link>
@@ -443,7 +299,7 @@ export default function Home() {
             {/* 히스토리 버튼 */}
             <button
               onClick={() => setShowHistoryModal(true)}
-              className="fixed right-0 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-l-xl shadow-lg transition-all duration-200 z-40 flex flex-col items-center gap-1"
+              className="fixed right-0 top-1/2 -translate-y-1/2 bg-slate-700 hover:bg-slate-800 text-white p-3 rounded-l-xl shadow-lg transition-all duration-200 z-40 flex flex-col items-center gap-1 border-l border-t border-b border-white/20"
               title="히스토리 보기"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -451,37 +307,51 @@ export default function Home() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span className="text-xs font-semibold">히스토리</span>
+              <span className="text-xs font-semibold">기록</span>
             </button>
 
             {/* 더미 데이터 버튼 */}
             <button
               onClick={fillDummyData}
-              className="fixed right-0 top-1/3 -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-l-xl shadow-lg transition-all duration-200 z-40 flex flex-col items-center gap-1"
+              className="fixed right-0 top-1/3 -translate-y-1/2 bg-sky-600 hover:bg-sky-700 text-white p-3 rounded-l-xl shadow-lg transition-all duration-200 z-40 flex flex-col items-center gap-1 border-l border-t border-b border-white/20"
               title="더미 데이터로 채우기"
             >
-              {renderDummyIcon()}
-              <span className="text-xs font-semibold">랜덤</span>
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+                />
+              </svg>
+              <span className="text-xs font-semibold">예시</span>
             </button>
           </>
         )}
 
         {/* Main Form Card */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-gray-200 slide-up">
-          <div className="mb-6 pb-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">신청자 정보</h2>
-            <p className="text-sm text-gray-600 mt-1">처방전 작성을 위한 정보를 입력해주세요</p>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8 border border-sky-100 slide-up relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-sky-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+
+          <div className="mb-8 pb-4 border-b border-gray-200 relative">
+            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <span className="text-3xl">📝</span> 기록 남기기
+            </h2>
+            <p className="text-sky-700 mt-2 font-medium">
+              솔직한 항해의 기록이 당신의 나침반이 됩니다
+            </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-10">
             {/* Personal Info Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                  이름
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-1">
+                <label htmlFor="name" className="block text-lg font-bold text-slate-700 mb-2">
+                  1. 선장 성함 (이름)
                 </label>
                 <input
                   type="text"
@@ -489,13 +359,16 @@ export default function Home() {
                   value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder="예: 홍길동"
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none"
+                  className="w-full px-4 py-4 bg-white border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 transition-all outline-none text-center font-bold text-xl text-slate-800 placeholder-slate-300"
                 />
+                <p className="text-xs text-slate-500 mt-2 text-center">
+                  정확한 기록을 위해 성함을 크게 적어주세요
+                </p>
               </div>
               <div>
                 <label
                   htmlFor="birthYear"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-bold text-slate-600 mb-2 mt-2"
                 >
                   출생연도
                 </label>
@@ -504,20 +377,23 @@ export default function Home() {
                   id="birthYear"
                   value={birthYear}
                   onChange={e => setBirthYear(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                  placeholder="예: 1990"
+                  placeholder="1960"
                   maxLength={4}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none"
+                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-sky-200 focus:border-sky-500 transition-all outline-none"
                 />
               </div>
               <div>
-                <label htmlFor="gender" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  htmlFor="gender"
+                  className="block text-sm font-bold text-slate-600 mb-2 mt-2"
+                >
                   성별
                 </label>
                 <select
                   id="gender"
                   value={gender}
                   onChange={e => setGender(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none cursor-pointer"
+                  className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-sky-200 focus:border-sky-500 transition-all outline-none cursor-pointer"
                 >
                   <option value="">선택하세요</option>
                   <option value="남성">남성</option>
@@ -527,71 +403,80 @@ export default function Home() {
             </div>
 
             {/* Reflection Sections */}
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="memory" className="block text-sm font-semibold text-gray-700 mb-2">
-                  올해 기억에 남는 일
+            <div className="space-y-8">
+              <div className="bg-sky-50/50 p-6 rounded-xl border border-sky-100 hover:border-sky-300 transition-colors">
+                <label htmlFor="memory" className="block text-xl font-bold text-slate-800 mb-2">
+                  2. 2025년, 어떤 파도를 넘어오셨나요?
                 </label>
+                <p className="text-slate-600 mb-4 text-sm">
+                  가장 기억에 남는 일이나, 보람찼던 순간을 적어주세요.
+                </p>
                 <textarea
                   id="memory"
                   value={memory}
                   onChange={e => setMemory(e.target.value)}
-                  placeholder="예: 새로운 취미를 시작했어요, 좋은 사람들을 만났어요..."
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none resize-none h-32"
+                  placeholder="( ____________________________________________________ )"
+                  className="w-full px-5 py-4 bg-white border border-sky-200 rounded-xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 transition-all outline-none resize-none h-28 text-lg"
                 />
               </div>
 
-              <div>
-                <label htmlFor="regret" className="block text-sm font-semibold text-gray-700 mb-2">
-                  올해 아쉬웠던 점
+              <div className="bg-sky-50/50 p-6 rounded-xl border border-sky-100 hover:border-sky-300 transition-colors">
+                <label htmlFor="regret" className="block text-xl font-bold text-slate-800 mb-2">
+                  3. 항해 중 조금 아쉬웠던 점은 무엇인가요?
                 </label>
+                <p className="text-slate-600 mb-4 text-sm">
+                  미처 하지 못했거나, 후회되는 일이 있다면 털어놓으세요.
+                </p>
                 <textarea
                   id="regret"
                   value={regret}
                   onChange={e => setRegret(e.target.value)}
-                  placeholder="예: 운동을 더 꾸준히 하지 못했어요, 책을 많이 읽지 못했어요..."
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none resize-none h-32"
+                  placeholder="( ____________________________________________________ )"
+                  className="w-full px-5 py-4 bg-white border border-sky-200 rounded-xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 transition-all outline-none resize-none h-28 text-lg"
                 />
               </div>
 
-              <div>
-                <label htmlFor="plan" className="block text-sm font-semibold text-gray-700 mb-2">
-                  내년 계획
+              <div className="bg-sky-50/50 p-6 rounded-xl border border-sky-100 hover:border-sky-300 transition-colors">
+                <label htmlFor="plan" className="block text-xl font-bold text-slate-800 mb-2">
+                  4. 2026년, 배의 키를 어디로 돌리시겠습니까?
                 </label>
+                <p className="text-slate-600 mb-4 text-sm">
+                  새해에 이루고 싶은 목표나 다짐을 적어주세요.
+                </p>
                 <textarea
                   id="plan"
                   value={plan}
                   onChange={e => setPlan(e.target.value)}
-                  placeholder="예: 매일 30분씩 운동하기, 월 2권 독서하기, 새로운 언어 배우기..."
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none resize-none h-32"
+                  placeholder="( ____________________________________________________ )"
+                  className="w-full px-5 py-4 bg-white border border-sky-200 rounded-xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 transition-all outline-none resize-none h-28 text-lg"
                 />
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-gray-100 mt-6">
               <button
                 onClick={generatePrompt}
                 disabled={!name || !birthYear || !gender || !memory || !regret || !plan}
-                className="bg-blue-600 hover:bg-blue-700 text-white py-3.5 px-6 rounded-lg font-semibold transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm"
+                className="bg-white hover:bg-slate-50 text-slate-600 py-4 px-6 rounded-xl font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm border border-slate-200"
               >
-                📋 프롬프트 생성하기
+                📋 프롬프트 미리보기
               </button>
               <button
                 onClick={handleGenerateClick}
                 disabled={
                   !name || !birthYear || !gender || !memory || !regret || !plan || isGenerating
                 }
-                className="bg-teal-600 hover:bg-teal-700 text-white py-3.5 px-6 rounded-lg font-semibold transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-sm"
+                className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white py-4 px-6 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex justify-center items-center gap-2 transform active:scale-[0.98]"
               >
-                🤖 Gemini AI로 바로 생성
+                <span>🧭 인생 나침반 확인하기</span>
               </button>
             </div>
           </div>
         </div>
 
         {generatedPrompt && (
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200 scale-in">
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200 scale-in mb-12">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4 pb-4 border-b border-gray-200">
               <div>
                 <h2 className="text-xl font-bold text-gray-900">📋 생성된 프롬프트</h2>
@@ -605,7 +490,7 @@ export default function Home() {
               </button>
             </div>
             <div className="bg-gray-50 rounded-lg p-6 border border-gray-200 mb-4">
-              <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono leading-relaxed">
+              <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono leading-relaxed max-h-96 overflow-y-auto">
                 {generatedPrompt}
               </pre>
             </div>
@@ -613,17 +498,16 @@ export default function Home() {
               <p className="font-semibold text-gray-900 mb-3">💡 사용 방법</p>
               <ol className="text-sm text-gray-700 space-y-2 list-decimal list-inside">
                 <li>위의 프롬프트를 복사하여 ChatGPT, Claude, Gemini 등의 AI에게 입력</li>
-                <li>AI가 생성한 HTML 형식 처방전을 복사 (전체 &lt;prescription&gt; 태그 포함)</li>
+                <li>AI가 생성한 XML 형식 결과물을 복사</li>
                 <li>
                   <Link
                     href="/receipt"
                     className="font-semibold text-blue-600 underline hover:text-blue-800"
                   >
-                    처방전 뷰어 페이지
+                    결과지 뷰어 페이지
                   </Link>
                   로 이동하여 붙여넣기
                 </li>
-                <li>실제 처방전 디자인으로 확인하고 인쇄하기! 🖨️</li>
               </ol>
             </div>
           </div>
@@ -631,30 +515,31 @@ export default function Home() {
 
         {/* 확인 모달 */}
         {showConfirmModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 fade-in">
-            <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full scale-in">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4 fade-in">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full scale-in border-t-4 border-sky-500">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">🤖</span>
+                <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-slow">
+                  <span className="text-5xl">⚓</span>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">AI 처방전 생성</h2>
-                <p className="text-gray-600">Gemini AI로 맞춤형 처방전을 생성하시겠습니까?</p>
-                <p className="text-sm text-gray-500 mt-2">
-                  생성 후 바로 미리보기 화면으로 이동합니다.
+                <h2 className="text-2xl font-bold text-slate-800 mb-2">항해를 시작하시겠습니까?</h2>
+                <p className="text-slate-600">
+                  작성하신 일지를 바탕으로
+                  <br />
+                  2026년 항해를 위한 나침반을 띄웁니다.
                 </p>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowConfirmModal(false)}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 px-6 rounded-lg font-semibold transition-colors"
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3.5 px-6 rounded-xl font-bold transition-colors"
                 >
-                  취소
+                  잠시만요
                 </button>
                 <button
                   onClick={generateWithAI}
-                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors shadow-sm"
+                  className="flex-1 bg-sky-600 hover:bg-sky-700 text-white py-3.5 px-6 rounded-xl font-bold transition-colors shadow-md"
                 >
-                  예, 생성합니다
+                  출항하기 🚢
                 </button>
               </div>
             </div>
@@ -663,17 +548,20 @@ export default function Home() {
 
         {/* 로딩 모달 */}
         {isGenerating && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4 fade-in">
-            <div className="bg-white rounded-xl shadow-2xl p-10 max-w-md w-full text-center scale-in">
-              <div className="mb-6">
-                <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-blue-600"></div>
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4 fade-in">
+            <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full text-center scale-in">
+              <div className="mb-8 relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-4xl animate-pulse">🧭</span>
+                </div>
+                <div className="inline-block animate-spin-slow rounded-full h-24 w-24 border-4 border-slate-100 border-t-sky-500"></div>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">🤖 AI 처방전 생성 중</h2>
-              <p className="text-gray-600">
-                <span className="font-semibold text-blue-600">{name}</span>님을 위한 맞춤형 처방전을
-                작성하고 있습니다.
+              <h2 className="text-2xl font-bold text-slate-800 mb-3">항로 탐색 중...</h2>
+              <p className="text-slate-600 leading-relaxed">
+                <span className="font-bold text-sky-700">{name} 선장님</span>의 기록을 읽고
+                <br />
+                최적의 항로를 분석하고 있습니다.
               </p>
-              <p className="text-sm text-gray-500 mt-2">잠시만 기다려주세요...</p>
             </div>
           </div>
         )}
