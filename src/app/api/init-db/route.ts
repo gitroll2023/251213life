@@ -2,6 +2,11 @@ import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
 export async function POST() {
+  // Only allow in development environment
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not allowed' }, { status: 403 });
+  }
+
   try {
     // prescriptions 테이블 생성
     await sql`

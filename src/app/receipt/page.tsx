@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import html2canvas from 'html2canvas';
 import PrescriptionRenderer from './components/PrescriptionRenderer';
-import LoginStatus from '../components/LoginStatus';
 
 export default function ReceiptPage() {
   const [prescriptionText, setPrescriptionText] = useState('');
@@ -88,7 +87,7 @@ export default function ReceiptPage() {
 
       // PNG로 다운로드
       const link = document.createElement('a');
-      const fileName = `인생나침반_${patientName || '참여자'}.png`;
+      const fileName = `나의항해일지_${patientName || '기록'}.png`;
       link.download = fileName;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
@@ -136,7 +135,6 @@ export default function ReceiptPage() {
               ← 항해 일지로
             </Link>
             <div className="flex items-center gap-3">
-              <LoginStatus />
               <button
                 onClick={saveAsImage}
                 disabled={!prescriptionText.trim()}
@@ -221,7 +219,7 @@ export default function ReceiptPage() {
                       <div className="doc-footer">
                         <div className="stamp-area">
                           <span className="sender">
-                            인생 항해 위원회 <span className="sign-mark">(인)</span>
+                            나의 항해일지 <span className="sign-mark">(인)</span>
                           </span>
                           <span className="stamp">
                             <span className="stamp-inner">인생나침반</span>
@@ -270,7 +268,7 @@ export default function ReceiptPage() {
             <div className="doc-footer-print">
               <div className="stamp-area-print">
                 <span className="sender-print">
-                  인생 항해 위원회 <span className="sign-mark-print">(인)</span>
+                  나의 항해일지 <span className="sign-mark-print">(인)</span>
                 </span>
                 <span className="stamp-print">
                   <div className="seal-circle">인생나침반</div>
@@ -326,7 +324,7 @@ export default function ReceiptPage() {
                 <div className="doc-footer mt-16 text-center">
                   <div className="stamp-area flex flex-col items-center justify-center">
                     <span className="sender text-2xl font-serif text-slate-800 mb-4">
-                      인생 항해 위원회 <span className="text-slate-300 text-lg ml-2">(인)</span>
+                      나의 항해일지 <span className="text-slate-300 text-lg ml-2">(인)</span>
                     </span>
                     <div className="relative inline-block">
                       <div

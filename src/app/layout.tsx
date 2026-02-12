@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: '마음 처방전 - AI 처방전',
-  description: '한 해를 돌아보고 마음을 치유하는 특별한 처방전을 만들어보세요',
+  title: '나의 항해일지 - 인생 나침반',
+  description: '거친 파도를 넘어온 당신의 기록을 남기고, 새로운 항해를 위한 나침반 메시지를 받아보세요',
 };
 
 export default function RootLayout({

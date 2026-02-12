@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import HistoryModal from './components/HistoryModal';
-import LoginStatus from './components/LoginStatus';
 
 export default function Home() {
   const router = useRouter();
@@ -22,18 +21,19 @@ export default function Home() {
 
   const generatePrompt = () => {
     const currentYear = new Date().getFullYear();
+    const nextYear = currentYear + 1;
     const age = birthYear ? currentYear - parseInt(birthYear) : 0;
 
     const prompt = `당신은 인생이라는 거친 바다에서 방향을 잡아주는 지혜로운 '인생 나침반'입니다.
-신청자(선장)의 비바람 쳤던 지난 항해(2025년)를 위로하고, 2026년의 새로운 항해를 위한 방향을 제시해주세요.
+신청자(선장)의 비바람 쳤던 지난 항해(${currentYear}년)를 위로하고, ${nextYear}년의 새로운 항해를 위한 방향을 제시해주세요.
 
 **⚓ 선장 정보:**
 - 성함: ${name}
 - 나이: ${birthYear}년생 (만 ${age}세)
 - 성별: ${gender}
-- 2025년 만난 파도(기억에 남는 일): ${memory}
+- ${currentYear}년 만난 파도(기억에 남는 일): ${memory}
 - 항해의 아쉬움(후회되는 점): ${regret}
-- 2026년 항로(새해 목표): ${plan}
+- ${nextYear}년 항로(새해 목표): ${plan}
 
 **🧭 '인생 나침반' 메시지 작성 규칙:**
 
@@ -45,9 +45,9 @@ export default function Home() {
    - **전체 내용은 반드시 5~6개의 짧은 문단으로 구성하며, 절대 길어지지 않도록 주의 (A4 용지 한 장 초과 방지)**
 
 2. **메시지 구성 가이드 (필수 포함 내용):**
-   - **거친 파도를 넘은 위로**: 2025년의 파도("${memory}")를 무사히 건너온 용기와 노고를 치하
+   - **거친 파도를 넘은 위로**: ${currentYear}년의 파도("${memory}")를 무사히 건너온 용기와 노고를 치하
    - **아쉬움의 포용**: 아쉬운 점("${regret}")은 더 단단한 배를 만들기 위한 과정임을 격려
-   - **새로운 항해의 응원**: 2026년의 목표("${plan}")를 향해 키를 잡은 선장을 응원
+   - **새로운 항해의 응원**: ${nextYear}년의 목표("${plan}")를 향해 키를 잡은 선장을 응원
    - **★ '새로운 배움'의 항로 권유 (핵심 필수사항)**:
      - ${age}세라는 나이는 새로운 미지의 바다(배움)를 탐험하기에 가장 좋은 때임을 강조
      - "배움이라는 나침반을 챙기세요", "새로운 지식의 섬을 찾아 떠나세요" 등 항해 은유를 사용하여 새로운 도전과 학습을 권유
@@ -57,11 +57,11 @@ export default function Home() {
 
 <compass>
   <section type="advice">
-    <title>2026 인생 나침반</title>
-    <message>${name} 선장님, 2025년이라는 거친 바다를 헤치고 여기까지 오시느라 정말 수고 많으셨습니다.</message>
+    <title>${nextYear} 인생 나침반</title>
+    <message>${name} 선장님, ${currentYear}년이라는 거친 바다를 헤치고 여기까지 오시느라 정말 수고 많으셨습니다.</message>
     <message>지난 항해에서 마주한 "${memory}"라는 파도는 당신을 더욱 노련한 선장으로 만들었을 것입니다.</message>
     <message>비록 "${regret}" 같은 역풍이 있었을지라도, 그것은 앞으로 나아갈 추진력이 되어줄 것입니다.</message>
-    <message>이제 2026년, "${plan}"라는 희망의 닻을 올리고 다시 한번 힘차게 출항하십시오.</message>
+    <message>이제 ${nextYear}년, "${plan}"라는 희망의 닻을 올리고 다시 한번 힘차게 출항하십시오.</message>
     <message>무엇보다 이번 항해에서는 '새로운 배움'이라는 미지의 보물을 찾아 떠나보시길 권합니다.</message>
     <message>나이라는 숫자에 얽매이지 않고 끊임없이 배우고 도전할 때, 당신의 항해는 언제나 푸른 청춘의 바다 위에 있을 것입니다.</message>
   </section>
@@ -85,36 +85,36 @@ export default function Home() {
   const fillDummyData = () => {
     const dummyDataSets = [
       {
-        name: '홍길동',
-        birthYear: '1960',
+        name: '김민수',
+        birthYear: '1990',
         gender: '남성',
-        memory: '정년 퇴임 후 혼자 떠난 제주도 여행',
-        regret: '친구들에게 먼저 연락하지 못한 소홀함',
-        plan: '바리스타 자격증 따서 주말 봉사하기',
+        memory: '첫 해외여행에서 만난 새로운 경험들',
+        regret: '운동을 계획만 세우고 실천하지 못한 것',
+        plan: '주 3회 헬스장 다니며 건강 챙기기',
       },
       {
-        name: '이순신',
-        birthYear: '1958',
-        gender: '남성',
-        memory: '손녀가 태어나서 처음 안아본 순간',
-        regret: '건강 검진을 미루다가 경고를 받은 일',
-        plan: '매일 아침 수영 배우기',
+        name: '이서연',
+        birthYear: '1995',
+        gender: '여성',
+        memory: '새로운 프로젝트를 성공적으로 마무리한 일',
+        regret: '친구들과 자주 만나지 못한 것',
+        plan: '매달 친구들과 정기모임 갖기',
       },
       {
-        name: '김유신',
-        birthYear: '1970',
-        gender: '남성',
-        memory: '직장에서 프로젝트 대상을 수상한 일',
-        regret: '가족들과 저녁 식사를 자주 하지 못한 것',
-        plan: '가족들과 함께하는 캠핑 시작하기',
+        name: '박지원',
+        birthYear: '1988',
+        gender: '여성',
+        memory: '오랜 준비 끝에 자격증을 취득한 순간',
+        regret: '가족들과 충분한 시간을 보내지 못한 것',
+        plan: '주말마다 가족과 함께 시간 보내기',
       },
       {
-        name: '강감찬',
-        birthYear: '1965',
+        name: '정하늘',
+        birthYear: '2000',
         gender: '남성',
-        memory: '텃밭을 가꾸며 첫 수확의 기쁨을 맛본 일',
-        regret: '책을 한 권도 끝까지 읽지 못한 것',
-        plan: '매월 1권 독서하고 독서 노트 쓰기',
+        memory: '새로운 취미활동을 시작하며 느낀 설렘',
+        regret: '책을 많이 사두고 읽지 못한 것',
+        plan: '매달 2권씩 독서하고 기록하기',
       },
     ];
 
@@ -142,18 +142,19 @@ export default function Home() {
 
     try {
       const currentYear = new Date().getFullYear();
+      const nextYear = currentYear + 1;
       const age = birthYear ? currentYear - parseInt(birthYear) : 0;
 
       const prompt = `당신은 인생이라는 거친 바다에서 방향을 잡아주는 지혜로운 '인생 나침반'입니다.
-    신청자(선장)의 비바람 쳤던 지난 항해(2025년)를 위로하고, 2026년의 새로운 항해를 위한 방향을 제시해주세요.
-    
+    신청자(선장)의 비바람 쳤던 지난 항해(${currentYear}년)를 위로하고, ${nextYear}년의 새로운 항해를 위한 방향을 제시해주세요.
+
     **⚓ 선장 정보:**
     - 성함: ${name}
     - 나이: ${birthYear}년생 (만 ${age}세)
     - 성별: ${gender}
-    - 2025년 만난 파도(기억에 남는 일): ${memory}
+    - ${currentYear}년 만난 파도(기억에 남는 일): ${memory}
     - 항해의 아쉬움(후회되는 점): ${regret}
-    - 2026년 항로(새해 목표): ${plan}
+    - ${nextYear}년 항로(새해 목표): ${plan}
     
     **🧭 '인생 나침반' 메시지 작성 규칙:**
     
@@ -164,9 +165,9 @@ export default function Home() {
        - **글자 크기가 큰 출력물에 들어갈 내용이므로, 문장은 간결하고 울림 있게(약 5-6문장)**
     
     2. **메시지 구성 가이드 (필수 포함 내용):**
-       - **거친 파도를 넘은 위로**: 2025년의 파도("${memory}")를 무사히 건너온 용기와 노고를 치하
+       - **거친 파도를 넘은 위로**: ${currentYear}년의 파도("${memory}")를 무사히 건너온 용기와 노고를 치하
        - **아쉬움의 포용**: 아쉬운 점("${regret}")은 더 단단한 배를 만들기 위한 과정임을 격려
-       - **새로운 항해의 응원**: 2026년의 목표("${plan}")를 향해 키를 잡은 선장을 응원
+       - **새로운 항해의 응원**: ${nextYear}년의 목표("${plan}")를 향해 키를 잡은 선장을 응원
        - **★ '새로운 배움'의 항로 권유 (핵심 필수사항)**:
          - ${age}세라는 나이는 새로운 미지의 바다(배움)를 탐험하기에 가장 좋은 때임을 강조
          - "배움이라는 나침반을 챙기세요", "새로운 지식의 섬을 찾아 떠나세요" 등 항해 은유를 사용하여 새로운 도전과 학습을 권유
@@ -176,11 +177,11 @@ export default function Home() {
     
     <compass>
       <section type="advice">
-        <title>2026 인생 나침반</title>
-        <message>${name} 선장님, 2025년이라는 거친 바다를 헤치고 여기까지 오시느라 정말 수고 많으셨습니다.</message>
+        <title>${nextYear} 인생 나침반</title>
+        <message>${name} 선장님, ${currentYear}년이라는 거친 바다를 헤치고 여기까지 오시느라 정말 수고 많으셨습니다.</message>
         <message>지난 항해에서 마주한 "${memory}"라는 파도는 당신을 더욱 노련한 선장으로 만들었을 것입니다.</message>
         <message>비록 "${regret}" 같은 역풍이 있었을지라도, 그것은 앞으로 나아갈 추진력이 되어줄 것입니다.</message>
-        <message>이제 2026년, "${plan}"라는 희망의 닻을 올리고 다시 한번 힘차게 출항하십시오.</message>
+        <message>이제 ${nextYear}년, "${plan}"라는 희망의 닻을 올리고 다시 한번 힘차게 출항하십시오.</message>
         <message>무엇보다 이번 항해에서는 '새로운 배움'이라는 미지의 보물을 찾아 떠나보시길 권합니다.</message>
         <message>나이라는 숫자에 얽매이지 않고 끊임없이 배우고 도전할 때, 당신의 항해는 언제나 푸른 청춘의 바다 위에 있을 것입니다.</message>
       </section>
@@ -257,11 +258,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-sky-50 py-12 px-4 sm:px-6 lg:px-8">
-      {/* Login Status */}
-      <div className="fixed top-4 right-4 z-30">
-        <LoginStatus />
-      </div>
-
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12 fade-in">
@@ -270,10 +266,7 @@ export default function Home() {
             <span className="text-sm font-bold text-sky-700">인생은 거대한 항해입니다</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-slate-800 tracking-tight">
-            [ 나의 항해 일지 ]{' '}
-            <span className="text-sky-600 font-light text-2xl md:text-4xl block mt-2">
-              : 2025-2026
-            </span>
+            [ 나의 항해 일지 ]
           </h1>
           <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             거친 파도를 넘어온 당신의 기록을 남겨주세요.
@@ -364,7 +357,7 @@ export default function Home() {
                   id="name"
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  placeholder="예: 홍길동"
+                  placeholder="예: 김민수"
                   className="w-full px-4 py-4 bg-white border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 transition-all outline-none text-center font-bold text-xl text-slate-800 placeholder-slate-300"
                 />
                 <p className="text-xs text-slate-500 mt-2 text-center">
@@ -412,7 +405,7 @@ export default function Home() {
             <div className="space-y-8">
               <div className="bg-sky-50/50 p-6 rounded-xl border border-sky-100 hover:border-sky-300 transition-colors">
                 <label htmlFor="memory" className="block text-xl font-bold text-slate-800 mb-2">
-                  2. 2025년, 어떤 파도를 넘어오셨나요?
+                  2. 올해, 어떤 파도를 넘어오셨나요?
                 </label>
                 <p className="text-slate-600 mb-4 text-sm">
                   가장 기억에 남는 일이나, 보람찼던 순간을 적어주세요.
@@ -444,7 +437,7 @@ export default function Home() {
 
               <div className="bg-sky-50/50 p-6 rounded-xl border border-sky-100 hover:border-sky-300 transition-colors">
                 <label htmlFor="plan" className="block text-xl font-bold text-slate-800 mb-2">
-                  4. 2026년, 배의 키를 어디로 돌리시겠습니까?
+                  4. 내년, 배의 키를 어디로 돌리시겠습니까?
                 </label>
                 <p className="text-slate-600 mb-4 text-sm">
                   새해에 이루고 싶은 목표나 다짐을 적어주세요.
@@ -531,7 +524,7 @@ export default function Home() {
                 <p className="text-slate-600">
                   작성하신 일지를 바탕으로
                   <br />
-                  2026년 항해를 위한 나침반을 띄웁니다.
+                  새로운 항해를 위한 나침반을 띄웁니다.
                 </p>
               </div>
               <div className="flex gap-3">
