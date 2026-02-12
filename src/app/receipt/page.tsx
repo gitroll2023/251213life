@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import html2canvas from 'html2canvas';
 import PrescriptionRenderer from './components/PrescriptionRenderer';
+import LoginStatus from '../components/LoginStatus';
 
 export default function ReceiptPage() {
   const [prescriptionText, setPrescriptionText] = useState('');
@@ -134,7 +135,8 @@ export default function ReceiptPage() {
             >
               ← 항해 일지로
             </Link>
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
+              <LoginStatus />
               <button
                 onClick={saveAsImage}
                 disabled={!prescriptionText.trim()}

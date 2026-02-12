@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import HistoryModal from './components/HistoryModal';
+import LoginStatus from './components/LoginStatus';
 
 export default function Home() {
   const router = useRouter();
@@ -256,6 +257,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-sky-50 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Login Status */}
+      <div className="fixed top-4 right-4 z-30">
+        <LoginStatus />
+      </div>
+
       <div className="max-w-4xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12 fade-in">
