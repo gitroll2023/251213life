@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import html2canvas from 'html2canvas';
 import PrescriptionRenderer from './components/PrescriptionRenderer';
+import LoginStatus from '../components/LoginStatus';
 
 export default function ReceiptPage() {
   const [prescriptionText, setPrescriptionText] = useState('');
@@ -99,6 +100,7 @@ export default function ReceiptPage() {
 
   return (
     <>
+      <LoginStatus />
       <style jsx global>{`
         @font-face {
           font-family: 'YeongjuSeonbi';
